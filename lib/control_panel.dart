@@ -762,7 +762,7 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
             builder: (_, sc) => Column(children: [
               Container(height: 4, width: 40, margin: EdgeInsets.only(top: 10, bottom: 10), decoration: BoxDecoration(color: _kBorder, borderRadius: BorderRadius.circular(2))),
               final Text('Notifications', style: TextStyle(color: _kText, fontWeight: FontWeight.w600, fontSize: 15)),
-              final SizedBox(height: 8),
+              SizedBox(height: 8),
               Expanded(child: ListView.separated(controller: sc, padding: EdgeInsets.symmetric(horizontal: 16),
                 itemCount: list.length, separatorBuilder: (_, __) => Divider(color: _kBorder, height: 1),
                 itemBuilder: (_, i) => ListTile(
@@ -832,7 +832,7 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
         builder: (_, sc) => Column(children: [
           Container(height: 4, width: 40, margin: EdgeInsets.only(top: 10, bottom: 10), decoration: BoxDecoration(color: _kBorder, borderRadius: BorderRadius.circular(2))),
           Text('Contacts (${contacts.length})', style: TextStyle(color: _kText, fontWeight: FontWeight.w600, fontSize: 15)),
-          final SizedBox(height: 8),
+          SizedBox(height: 8),
           Expanded(child: ListView.separated(controller: sc, padding: EdgeInsets.symmetric(horizontal: 16),
             itemCount: contacts.length, separatorBuilder: (_, __) => Divider(color: _kBorder, height: 1),
             itemBuilder: (_, i) => ListTile(
@@ -854,7 +854,7 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
         builder: (_, sc) => Column(children: [
           Container(height: 4, width: 40, margin: EdgeInsets.only(top: 10, bottom: 10), decoration: BoxDecoration(color: _kBorder, borderRadius: BorderRadius.circular(2))),
           Text('SMS (${sms.length})', style: TextStyle(color: _kText, fontWeight: FontWeight.w600, fontSize: 15)),
-          final SizedBox(height: 8),
+          SizedBox(height: 8),
           Expanded(child: ListView.separated(controller: sc, padding: EdgeInsets.symmetric(horizontal: 16),
             itemCount: sms.length, separatorBuilder: (_, __) => Divider(color: _kBorder, height: 1),
             itemBuilder: (_, i) {
@@ -878,7 +878,7 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
         builder: (_, sc) => Column(children: [
           Container(height: 4, width: 40, margin: EdgeInsets.only(top: 10, bottom: 10), decoration: BoxDecoration(color: _kBorder, borderRadius: BorderRadius.circular(2))),
           Text('Gallery (${imgs.length})', style: TextStyle(color: _kText, fontWeight: FontWeight.w600, fontSize: 15)),
-          final SizedBox(height: 8),
+          SizedBox(height: 8),
           Expanded(child: imgs.isEmpty
               ? final Center(child: Text('No photos', style: TextStyle(color: _kTextSecondary)))
               : GridView.builder(controller: sc, padding: EdgeInsets.all(10),
@@ -908,7 +908,7 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
     Text(title, style: TextStyle(color: _kText, fontSize: 16, fontWeight: FontWeight.w600)),
     final SizedBox(height: 4),
     Text(subtitle, style: TextStyle(color: _kTextSecondary, fontSize: 12)),
-    final SizedBox(height: 8),
+    SizedBox(height: 8),
     Container(height: 1, color: _kBorder),
   ]);
 
