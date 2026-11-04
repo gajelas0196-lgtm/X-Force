@@ -204,37 +204,37 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
   // LIVE STREAM
   // ─────────────────────────────────────────────────────────────────────────
   Future<void> _startLive(String mode, String extra) async {
-    await _cmd(mode, extra: extra);
-    if (!mounted) return;
-    setState(() {
-      _liveOn = true; _frame = null;
-      _liveTitle = mode == 'live_camera_start'
-          ? (extra == 'front' ? 'Front Camera' : 'Rear Camera')
-          : 'Screen Mirror';
-      _frmCount = 0; _fps = 0; _fpsTs = DateTime.now();
-    });
-    _liveTimer?.cancel();
-    _liveTimer = Timer.periodic(final Duration(milliseconds: 80), (_) async {
-      if (!_liveOn || !mounted) { _liveTimer?.cancel(); return; }
-      try {
-        final res = await http.get(Uri.parse('$_kBase/api/live-frame/$_id'))
-            .timeout(final Duration(milliseconds: 500));
-        if (res.statusCode == 200) {
-          final raw = (jsonDecode(res.body)['frame'] ?? '').toString();
-          if (raw.isNotEmpty && mounted) {
-            final clean = raw.contains(',') ? raw.split(',').last : raw;
-            final bytes = base64Decode(clean);
-            setState(() {
-              _frame = bytes; _frmCount++;
-              final ms = DateTime.now().difference(_fpsTs).inMilliseconds;
-              if (ms >= 1000) { _fps = (_frmCount * 1000 / ms).round(); _frmCount = 0; _fpsTs = DateTime.now(); }
-            });
-            _frameN.value++;
-          }
+  await _cmd(mode, extra: extra);
+  if (!mounted) return;
+  setState(() {
+    _liveOn = true; _frame = null;
+    _liveTitle = mode == 'live_camera_start'
+        ? (extra == 'front' ? 'Front Camera' : 'Rear Camera')
+        : 'Screen Mirror';
+    _frmCount = 0; _fps = 0; _fpsTs = DateTime.now();
+  });
+  _liveTimer?.cancel();
+  _liveTimer = Timer.periodic(const Duration(milliseconds: 80), (_) async {
+    if (!_liveOn || !mounted) { _liveTimer?.cancel(); return; }
+    try {
+      final res = await http.get(Uri.parse('$_kBase/api/live-frame/$_id'))
+          .timeout(const Duration(milliseconds: 500));
+      if (res.statusCode == 200) {
+        final raw = (jsonDecode(res.body)['frame'] ?? '').toString();
+        if (raw.isNotEmpty && mounted) {
+          final clean = raw.contains(',') ? raw.split(',').last : raw;
+          final bytes = base64Decode(clean);
+          setState(() {
+            _frame = bytes; _frmCount++;
+            final ms = DateTime.now().difference(_fpsTs).inMilliseconds;
+            if (ms >= 1000) { _fps = (_frmCount * 1000 / ms).round(); _frmCount = 0; _fpsTs = DateTime.now(); }
+          });
+          _frameN.value++;
         }
-      } catch (_) {}
-    });
-  }
+      }
+    } catch (_) {}
+  });
+}
 
   void _stopLive() {
     _liveTimer?.cancel();

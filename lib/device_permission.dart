@@ -164,22 +164,22 @@ class _DPMState extends State<DevicePermissionManagerPage> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    backgroundColor: _C.bg,
-    appBar: AppBar(
-      backgroundColor: _C.s1,
-      elevation: 0,
-      title: const Text('Kelola Akses Device', style: TextStyle(color: _C.textP, fontSize: 15, fontWeight: FontWeight.bold)),
-      iconTheme: const IconThemeData(color: _C.accentL),
-      actions: [
-        if (_saving) const Padding(padding: EdgeInsets.only(right: 16),
-          child: SizedBox(width: 18, height: 18, child: CircularProgressIndicator(color: _C.accentL, strokeWidth: 2))),
-      ],
-      bottom: PreferredSize(preferredSize: final Size.fromHeight(1), child: Container(height: 1, color: _C.border)),
-    ),
-    body: _loading
-        ? final Center(child: CircularProgressIndicator(color: _C.accentL))
-        : Column(children: [
+Widget build(BuildContext context) => Scaffold(
+  backgroundColor: _C.bg,
+  appBar: AppBar(
+    backgroundColor: _C.s1,
+    elevation: 0,
+    title: Text('Kelola Akses Device', style: TextStyle(color: _C.textP, fontSize: 15, fontWeight: FontWeight.bold)),
+    iconTheme: IconThemeData(color: _C.accentL),
+    actions: [
+      if (_saving) const Padding(padding: EdgeInsets.only(right: 16),
+        child: SizedBox(width: 18, height: 18, child: CircularProgressIndicator(color: _C.accentL, strokeWidth: 2))),
+    ],
+    bottom: PreferredSize(preferredSize: const Size.fromHeight(1), child: Container(height: 1, color: _C.border)),
+  ),
+  body: _loading
+      ? const Center(child: CircularProgressIndicator(color: _C.accentL))
+      : Column(children: [
       // ─ Add user ──────────────────────────────────────────────────────
       Padding(padding: final EdgeInsets.all(14), child: Row(children: [
         Expanded(child: Container(
