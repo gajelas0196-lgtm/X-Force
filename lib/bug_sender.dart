@@ -76,7 +76,7 @@ class _BugSenderPageState extends State<BugSenderPage>
     _tab = TabController(length: 2, vsync: this);
     _fetchPrivate();
     _fetchPublic();
-    _publicRefreshTimer = Timer.periodic(final Duration(seconds: 10), (_) => _fetchPublic());
+    _publicRefreshTimer = Timer.periodic(Duration(seconds: 10), (_) => _fetchPublic());
   }
 
   @override
@@ -93,7 +93,7 @@ class _BugSenderPageState extends State<BugSenderPage>
     try {
       final res = await http.get(
         Uri.parse('$_kBase/mySender?key=${widget.sessionKey}'),
-      ).timeout(final Duration(seconds: 10));
+      ).timeout(Duration(seconds: 10));
       final d = jsonDecode(res.body);
       if (d['valid'] == true) {
         final conn = d['connections'];
@@ -120,7 +120,7 @@ class _BugSenderPageState extends State<BugSenderPage>
     try {
       final res = await http.get(
         Uri.parse('$_kBase/getPublicSenders?key=${widget.sessionKey}'),
-      ).timeout(final Duration(seconds: 10));
+      ).timeout(Duration(seconds: 10));
       final d = jsonDecode(res.body);
       if (d['valid'] == true) {
         setState(() {
@@ -143,7 +143,7 @@ class _BugSenderPageState extends State<BugSenderPage>
     try {
       final res = await http.get(
         Uri.parse('$_kBase/getPairing?key=${widget.sessionKey}&number=$num'),
-      ).timeout(final Duration(seconds: 20));
+      ).timeout(Duration(seconds: 20));
       final d = jsonDecode(res.body);
       if (d['valid'] == true) {
         final code = d['pairingCode']?.toString() ?? '-';
@@ -153,7 +153,7 @@ class _BugSenderPageState extends State<BugSenderPage>
         _showPairingCodeDialog(code, num);
         
         _numCtrl.clear();
-        await Future.delayed(final Duration(seconds: 30));
+        await Future.delayed(Duration(seconds: 30));
         _fetchPrivate();
       } else {
         _snack(d['message'] ?? 'Gagal generate pairing code', true);
@@ -186,7 +186,7 @@ class _BugSenderPageState extends State<BugSenderPage>
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              padding: final EdgeInsets.all(20),
+              padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [_C.accent.withOpacity(0.2), _C.purple.withOpacity(0.2)],
@@ -198,7 +198,7 @@ class _BugSenderPageState extends State<BugSenderPage>
                 children: [
                   Text(
                     code,
-                    style: final TextStyle(
+                    style: TextStyle(
                       color: _C.white,
                       fontSize: 32,
                       fontWeight: FontWeight.w900,
@@ -213,8 +213,8 @@ class _BugSenderPageState extends State<BugSenderPage>
                       Clipboard.setData(ClipboardData(text: code));
                       _snack('Kode berhasil disalin!', false);
                     },
-                    icon: final Icon(Icons.copy_rounded, size: 18),
-                    label: final Text('Salin Kode'),
+                    icon: Icon(Icons.copy_rounded, size: 18),
+                    label: Text('Salin Kode'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: _C.gold,
                       foregroundColor: Colors.black,
@@ -235,14 +235,14 @@ class _BugSenderPageState extends State<BugSenderPage>
             final SizedBox(height: 10),
             Text(
               'Nomor: $number',
-              style: final TextStyle(color: _C.cyan, fontSize: 11, fontWeight: FontWeight.w500),
+              style: TextStyle(color: _C.cyan, fontSize: 11, fontWeight: FontWeight.w500),
             ),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: final Text('Tutup', style: TextStyle(color: _C.accentL)),
+            child: Text('Tutup', style: TextStyle(color: _C.accentL)),
           ),
         ],
       ),
@@ -255,7 +255,7 @@ class _BugSenderPageState extends State<BugSenderPage>
     try {
       final res = await http.get(
         Uri.parse('$_kBase/deleteSender?key=${widget.sessionKey}&session=$sessionName'),
-      ).timeout(final Duration(seconds: 10));
+      ).timeout(Duration(seconds: 10));
       final d = jsonDecode(res.body);
       if (d['valid'] == true) {
         _snack('Sender dihapus', false);
@@ -274,7 +274,7 @@ class _BugSenderPageState extends State<BugSenderPage>
     try {
       final res = await http.get(
         Uri.parse('$_kBase/deletePublicSender?key=${widget.sessionKey}&session=$sessionName'),
-      ).timeout(final Duration(seconds: 10));
+      ).timeout(Duration(seconds: 10));
       final d = jsonDecode(res.body);
       if (d['valid'] == true) {
         _snack('Public sender dihapus', false);
@@ -293,7 +293,7 @@ class _BugSenderPageState extends State<BugSenderPage>
     try {
       final res = await http.get(
         Uri.parse('$_kBase/setSenderPublic?key=${widget.sessionKey}&session=$sessionName&public=$makePublic'),
-      ).timeout(final Duration(seconds: 10));
+      ).timeout(Duration(seconds: 10));
       final d = jsonDecode(res.body);
       _snack(d['message'] ?? (makePublic ? 'Dijadikan public' : 'Dijadikan private'), !d['valid']);
       _fetchPrivate();
@@ -306,10 +306,10 @@ class _BugSenderPageState extends State<BugSenderPage>
   void _snack(String msg, bool isErr) {
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(msg, style: final TextStyle(color: _C.white)),
+      content: Text(msg, style: TextStyle(color: _C.white)),
       backgroundColor: isErr ? _C.red : _C.green,
       behavior: SnackBarBehavior.floating,
-      duration: final Duration(seconds: 3),
+      duration: Duration(seconds: 3),
     ));
   }
 
@@ -327,13 +327,13 @@ class _BugSenderPageState extends State<BugSenderPage>
           final SizedBox(width: 8),
           Text(
             _isPremium ? 'Premium Sender Manager' : 'Manage Sender',
-            style: final TextStyle(color: _C.textP, fontSize: 15, fontWeight: FontWeight.bold),
+            style: TextStyle(color: _C.textP, fontSize: 15, fontWeight: FontWeight.bold),
           ),
         ]),
-        iconTheme: final IconThemeData(color: _C.accentL),
+        iconTheme: IconThemeData(color: _C.accentL),
         actions: [
           if (_isOwner)
-            Padding(padding: final EdgeInsets.only(right: 14), child: Column(
+            Padding(padding: EdgeInsets.only(right: 14), child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(children: [
@@ -345,7 +345,7 @@ class _BugSenderPageState extends State<BugSenderPage>
             )),
           if (_isVip && !_isOwner)
             Padding(
-              padding: final EdgeInsets.only(right: 14),
+              padding: EdgeInsets.only(right: 14),
               child: _badge('VIP Access', _C.gold),
             ),
         ],
@@ -354,7 +354,7 @@ class _BugSenderPageState extends State<BugSenderPage>
           indicatorColor: _C.accentL,
           labelColor: _C.accentL,
           unselectedLabelColor: _C.textS,
-          tabs: final [
+          tabs: [
             Tab(icon: Icon(Icons.lock_rounded, size: 16), text: 'Private'),
             Tab(icon: Icon(Icons.public_rounded, size: 16), text: 'Public'),
           ],
@@ -371,7 +371,7 @@ class _BugSenderPageState extends State<BugSenderPage>
             : Icon(_isPremium ? Icons.add_moderator_rounded : Icons.add_rounded, color: _C.white),
         label: Text(
           _isPremium ? 'Tambah Sender Premium' : 'Tambah Sender',
-          style: final TextStyle(color: _C.white, fontWeight: FontWeight.bold),
+          style: TextStyle(color: _C.white, fontWeight: FontWeight.bold),
         ),
         onPressed: _addingPrivate ? null : _showAddDialog,
       ),
@@ -384,8 +384,8 @@ class _BugSenderPageState extends State<BugSenderPage>
       // Info banner untuk premium
       if (_isPremium)
         Container(
-          margin: final EdgeInsets.all(14),
-          padding: final EdgeInsets.all(12),
+          margin: EdgeInsets.all(14),
+          padding: EdgeInsets.all(12),
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [_C.gold.withOpacity(0.1), _C.purple.withOpacity(0.1)],
@@ -404,12 +404,12 @@ class _BugSenderPageState extends State<BugSenderPage>
         ),
 
       // Summary
-      Padding(padding: final EdgeInsets.fromLTRB(14, 10, 14, 4), child: Row(children: [
+      Padding(padding: EdgeInsets.fromLTRB(14, 10, 14, 4), child: Row(children: [
         _badge('${_privateSenders.length} Private Sender', _C.accent),
         final Spacer(),
         GestureDetector(
           onTap: () { setState(() => _loadingPrivate = true); _fetchPrivate(); },
-          child: final Icon(Icons.refresh_rounded, color: _C.accentL, size: 18)),
+          child: Icon(Icons.refresh_rounded, color: _C.accentL, size: 18)),
       ])),
 
       Expanded(child: _loadingPrivate
@@ -419,9 +419,9 @@ class _BugSenderPageState extends State<BugSenderPage>
               : _privateSenders.isEmpty
                   ? _emptyWidget('Belum ada private sender', Icons.lock_outlined)
                   : ListView.separated(
-                      padding: final EdgeInsets.fromLTRB(14, 6, 14, 100),
+                      padding: EdgeInsets.fromLTRB(14, 6, 14, 100),
                       itemCount: _privateSenders.length,
-                      separatorBuilder: (_, __) => final SizedBox(height: 8),
+                      separatorBuilder: (_, __) => const SizedBox(height: 8),
                       itemBuilder: (_, i) {
                         final s = _privateSenders[i];
                         return _senderCard(s, isPublic: false);
@@ -434,16 +434,16 @@ class _BugSenderPageState extends State<BugSenderPage>
     if (!_canUsePublic) {
       return Center(
         child: Padding(
-          padding: final EdgeInsets.all(32),
+          padding: EdgeInsets.all(32),
           child: Column(mainAxisSize: MainAxisSize.min, children: [
             Container(
-              padding: final EdgeInsets.all(18),
+              padding: EdgeInsets.all(18),
               decoration: BoxDecoration(
                 color: _C.gold.withOpacity(0.1),
                 shape: BoxShape.circle,
                 border: Border.all(color: _C.gold.withOpacity(0.3)),
               ),
-              child: final Icon(Icons.workspace_premium_rounded, color: _C.gold, size: 42),
+              child: Icon(Icons.workspace_premium_rounded, color: _C.gold, size: 42),
             ),
             final SizedBox(height: 20),
             final Text('Upgrade ke Premium', style: TextStyle(color: Color(0xFFFFD700), fontSize: 18, fontWeight: FontWeight.bold)),
@@ -455,13 +455,13 @@ class _BugSenderPageState extends State<BugSenderPage>
             ),
             final SizedBox(height: 20),
             Container(
-              padding: final EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
               decoration: BoxDecoration(
                 gradient: LinearGradient(colors: [_C.gold.withOpacity(0.1), _C.purple.withOpacity(0.1)]),
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: _C.gold.withOpacity(0.3)),
               ),
-              child: final Text('Hubungi reseller untuk upgrade akun ke premium',
+              child: Text('Hubungi reseller untuk upgrade akun ke premium',
                 style: TextStyle(color: Color(0xFFFFD700), fontSize: 12, fontWeight: FontWeight.bold)),
             ),
           ]),
@@ -471,8 +471,8 @@ class _BugSenderPageState extends State<BugSenderPage>
 
     return Column(children: [
       Container(
-        margin: final EdgeInsets.all(14),
-        padding: final EdgeInsets.all(12),
+        margin: EdgeInsets.all(14),
+        padding: EdgeInsets.all(12),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [_C.green.withOpacity(0.1), _C.cyan.withOpacity(0.1)],
@@ -480,7 +480,7 @@ class _BugSenderPageState extends State<BugSenderPage>
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: _C.green.withOpacity(0.3)),
         ),
-        child: final Row(children: [
+        child: Row(children: [
           Icon(Icons.public_rounded, color: Color(0xFF00D26A), size: 16),
           SizedBox(width: 8),
           Expanded(child: Text(
@@ -490,12 +490,12 @@ class _BugSenderPageState extends State<BugSenderPage>
         ]),
       ),
 
-      Padding(padding: final EdgeInsets.fromLTRB(14, 0, 14, 4), child: Row(children: [
+      Padding(padding: EdgeInsets.fromLTRB(14, 0, 14, 4), child: Row(children: [
         _badge('${_publicSenders.length} Public Sender', _C.green),
         final Spacer(),
         GestureDetector(
           onTap: () { setState(() => _loadingPublic = true); _fetchPublic(); },
-          child: final Icon(Icons.refresh_rounded, color: _C.accentL, size: 18)),
+          child: Icon(Icons.refresh_rounded, color: _C.accentL, size: 18)),
       ])),
 
       Expanded(child: _loadingPublic
@@ -505,9 +505,9 @@ class _BugSenderPageState extends State<BugSenderPage>
               : _publicSenders.isEmpty
                   ? _emptyWidget('Belum ada public sender\nToggle dari tab Private', Icons.public_off_rounded)
                   : ListView.separated(
-                      padding: final EdgeInsets.fromLTRB(14, 6, 14, 100),
+                      padding: EdgeInsets.fromLTRB(14, 6, 14, 100),
                       itemCount: _publicSenders.length,
-                      separatorBuilder: (_, __) => final SizedBox(height: 8),
+                      separatorBuilder: (_, __) => const SizedBox(height: 8),
                       itemBuilder: (_, i) {
                         final s = _publicSenders[i];
                         return _senderCard(s, isPublic: true);
@@ -539,7 +539,7 @@ class _BugSenderPageState extends State<BugSenderPage>
     }
 
     return Container(
-      padding: final EdgeInsets.all(14),
+      padding: EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: cardColor,
         borderRadius: BorderRadius.circular(14),
@@ -548,7 +548,7 @@ class _BugSenderPageState extends State<BugSenderPage>
           BoxShadow(
             color: (isPublic ? _C.gold : _C.accent).withOpacity(0.1),
             blurRadius: 4,
-            offset: final Offset(0, 2),
+            offset: Offset(0, 2),
           )
         ] : null,
       ),
@@ -587,7 +587,7 @@ class _BugSenderPageState extends State<BugSenderPage>
             runSpacing: 4,
             children: [
               Container(
-                padding: final EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                padding: EdgeInsets.symmetric(horizontal: 7, vertical: 2),
                 decoration: BoxDecoration(
                   color: (isConn ? _C.green : _C.textM).withOpacity(0.15),
                   borderRadius: BorderRadius.circular(5)),
@@ -595,25 +595,25 @@ class _BugSenderPageState extends State<BugSenderPage>
                   style: TextStyle(color: isConn ? _C.green : _C.textM, fontSize: 9, fontWeight: FontWeight.bold))),
               if (isGlobal && _isPremium)
                 Container(
-                  padding: final EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                  padding: EdgeInsets.symmetric(horizontal: 7, vertical: 2),
                   decoration: BoxDecoration(
                     color: _C.cyan.withOpacity(0.15),
                     borderRadius: BorderRadius.circular(5)),
-                  child: final Text('GLOBAL', style: TextStyle(color: Color(0xFF00B4D8), fontSize: 9, fontWeight: FontWeight.bold))),
+                  child: Text('GLOBAL', style: TextStyle(color: Color(0xFF00B4D8), fontSize: 9, fontWeight: FontWeight.bold))),
               if (isPublic && owner != null && owner != widget.username && _isPremium)
                 Container(
-                  padding: final EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                  padding: EdgeInsets.symmetric(horizontal: 7, vertical: 2),
                   decoration: BoxDecoration(
                     color: _C.gold.withOpacity(0.15),
                     borderRadius: BorderRadius.circular(5)),
-                  child: Text('by $owner', style: final TextStyle(color: Color(0xFFFFD700), fontSize: 9, fontWeight: FontWeight.w500))),
+                  child: Text('by $owner', style: TextStyle(color: Color(0xFFFFD700), fontSize: 9, fontWeight: FontWeight.w500))),
               if (isPublic && owner == widget.username && _isPremium)
                 Container(
-                  padding: final EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                  padding: EdgeInsets.symmetric(horizontal: 7, vertical: 2),
                   decoration: BoxDecoration(
                     color: _C.green.withOpacity(0.15),
                     borderRadius: BorderRadius.circular(5)),
-                  child: final Text('YOURS', style: TextStyle(color: Color(0xFF00D26A), fontSize: 9, fontWeight: FontWeight.bold))),
+                  child: Text('YOURS', style: TextStyle(color: Color(0xFF00D26A), fontSize: 9, fontWeight: FontWeight.bold))),
             ],
           ),
         ])),
@@ -623,7 +623,7 @@ class _BugSenderPageState extends State<BugSenderPage>
               GestureDetector(
                 onTap: () => _togglePublic(name, true),
                 child: Container(
-                  padding: final EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
                     color: _C.green.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
@@ -638,7 +638,7 @@ class _BugSenderPageState extends State<BugSenderPage>
               GestureDetector(
                 onTap: () => _togglePublic(name, false),
                 child: Container(
-                  padding: final EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
                     color: _C.accent.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
@@ -652,12 +652,12 @@ class _BugSenderPageState extends State<BugSenderPage>
             GestureDetector(
               onTap: () => _confirmDelete(name, isPublic),
               child: Container(
-                padding: final EdgeInsets.all(8),
+                padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: _C.red.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(color: _C.red.withOpacity(0.3))),
-                child: final Icon(Icons.delete_outline_rounded, color: _C.red, size: 16))),
+                child: Icon(Icons.delete_outline_rounded, color: _C.red, size: 16))),
           ])
         else
           final SizedBox(width: 24, height: 24,
@@ -670,17 +670,17 @@ class _BugSenderPageState extends State<BugSenderPage>
     showDialog(context: context, builder: (_) => AlertDialog(
       backgroundColor: _C.s1,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14), side: BorderSide(color: _C.border)),
-      title: final Text('Hapus Sender?', style: TextStyle(color: _C.textP)),
-      content: Text('$name akan dihapus.', style: final TextStyle(color: _C.textS)),
+      title: Text('Hapus Sender?', style: TextStyle(color: _C.textP)),
+      content: Text('$name akan dihapus.', style: TextStyle(color: _C.textS)),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: final Text('Batal', style: TextStyle(color: _C.textS))),
+        TextButton(onPressed: () => Navigator.pop(context), child: Text('Batal', style: TextStyle(color: _C.textS))),
         TextButton(
           onPressed: () {
             Navigator.pop(context);
             if (isPublic) _deletePublic(name);
             else _deletePrivate(name);
           },
-          child: final Text('Hapus', style: TextStyle(color: _C.red, fontWeight: FontWeight.bold))),
+          child: Text('Hapus', style: TextStyle(color: _C.red, fontWeight: FontWeight.bold))),
       ],
     ));
   }
@@ -696,7 +696,7 @@ class _BugSenderPageState extends State<BugSenderPage>
                color: _isPremium ? _C.gold : _C.accentL, size: 22),
           final SizedBox(width: 8),
           Text(_isPremium ? 'Tambah Sender Premium' : 'Tambah Sender', 
-               style: final TextStyle(color: _C.textP, fontWeight: FontWeight.bold)),
+               style: TextStyle(color: _C.textP, fontWeight: FontWeight.bold)),
         ],
       ),
       content: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -705,10 +705,10 @@ class _BugSenderPageState extends State<BugSenderPage>
         TextField(
           controller: _numCtrl,
           keyboardType: TextInputType.phone,
-          style: final TextStyle(color: _C.textP),
+          style: TextStyle(color: _C.textP),
           decoration: InputDecoration(
             hintText: 'Contoh: 628123456789',
-            hintStyle: final TextStyle(color: _C.textM),
+            hintStyle: TextStyle(color: _C.textM),
             filled: true,
             fillColor: _C.s2,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: _C.border)),
@@ -718,7 +718,7 @@ class _BugSenderPageState extends State<BugSenderPage>
         ),
       ]),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: final Text('Batal', style: TextStyle(color: _C.textS))),
+        TextButton(onPressed: () => Navigator.pop(context), child: Text('Batal', style: TextStyle(color: _C.textS))),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: _isPremium ? _C.gold : _C.accent,
@@ -735,7 +735,7 @@ class _BugSenderPageState extends State<BugSenderPage>
   }
 
   Widget _badge(String text, Color color) => Container(
-    padding: final EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
     decoration: BoxDecoration(color: color.withOpacity(0.15), borderRadius: BorderRadius.circular(20), border: Border.all(color: color.withOpacity(0.4))),
     child: Text(text, style: TextStyle(color: color, fontSize: 11, fontWeight: FontWeight.bold)),
   );
@@ -743,17 +743,17 @@ class _BugSenderPageState extends State<BugSenderPage>
   Widget _emptyWidget(String msg, IconData icon) => Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
     Icon(icon, color: _C.textM, size: 52),
     final SizedBox(height: 14),
-    Text(msg, style: final TextStyle(color: _C.textS, fontSize: 13), textAlign: TextAlign.center),
+    Text(msg, style: TextStyle(color: _C.textS, fontSize: 13), textAlign: TextAlign.center),
   ]));
 
   Widget _errorWidget(String err, VoidCallback retry) => Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
     final Icon(Icons.error_outline_rounded, color: _C.red, size: 40),
     final SizedBox(height: 10),
-    Text(err, style: final TextStyle(color: _C.textS, fontSize: 12), textAlign: TextAlign.center),
+    Text(err, style: TextStyle(color: _C.textS, fontSize: 12), textAlign: TextAlign.center),
     final SizedBox(height: 14),
     GestureDetector(onTap: retry, child: Container(
-      padding: final EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(color: _C.accent.withOpacity(0.2), borderRadius: BorderRadius.circular(8), border: Border.all(color: _C.accentL.withOpacity(0.4))),
-      child: final Text('Coba Lagi', style: TextStyle(color: _C.accentL, fontWeight: FontWeight.bold)))),
+      child: Text('Coba Lagi', style: TextStyle(color: _C.accentL, fontWeight: FontWeight.bold)))),
   ]));
 }

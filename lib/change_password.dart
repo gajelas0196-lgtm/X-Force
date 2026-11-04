@@ -95,7 +95,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
         ),
         content: Text(
           msg,
-          style: final TextStyle(color: Colors.white70),
+          style: TextStyle(color: Colors.white70),
         ),
         actions: [
           TextButton(
@@ -113,9 +113,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: final Color(0xFF120000),
+      backgroundColor: Color(0xFF120000),
       appBar: AppBar(
-        title: final Text(
+        title: Text(
           "Change Password",
           style: TextStyle(
             color: Colors.white,
@@ -125,10 +125,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
         ),
         backgroundColor: mainPurple,
         elevation: 0,
-        iconTheme: final IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       body: Padding(
-        padding: final EdgeInsets.all(24),
+        padding: EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -179,7 +179,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: mainPurple,
                   foregroundColor: Colors.white,
-                  padding: final EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -194,7 +194,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     strokeWidth: 2,
                   ),
                 )
-                    : final Row(
+                    : Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(Icons.security, size: 20),
@@ -221,10 +221,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     return TextField(
       controller: controller,
       obscureText: obscure,
-      style: final TextStyle(color: Colors.white),
+      style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: final TextStyle(color: Colors.white54),
+        hintStyle: TextStyle(color: Colors.white54),
         filled: true,
         fillColor: cardPurple,
         border: OutlineInputBorder(
@@ -239,7 +239,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: accentPurple.withOpacity(0.2)),
         ),
-        contentPadding: final EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       ),
     );
   }

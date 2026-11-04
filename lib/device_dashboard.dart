@@ -46,7 +46,7 @@ class _DDState extends State<DeviceDashboardPage> {
   void initState() {
     super.initState();
     _loadAll();
-    _timer = Timer.periodic(final Duration(seconds: 20), (_) => _loadAll());
+    _timer = Timer.periodic(Duration(seconds: 20), (_) => _loadAll());
   }
 
   @override void dispose() { _timer?.cancel(); super.dispose(); }
@@ -57,7 +57,7 @@ class _DDState extends State<DeviceDashboardPage> {
       // GET PAIR ID - FIXED: Gunakan endpoint yang benar /rat/pairid
       final pRes = await http
           .get(Uri.parse('$_kBase/rat/pairid?key=${widget.sessionKey}'))
-          .timeout(final Duration(seconds: 8));
+          .timeout(Duration(seconds: 8));
       if (pRes.statusCode == 200) {
         final pd = jsonDecode(pRes.body);
         // Cek valid response
@@ -78,7 +78,7 @@ class _DDState extends State<DeviceDashboardPage> {
       // GET DEVICES
       final dRes = await http
           .get(Uri.parse('$_kBase/rat/my-devices?key=${widget.sessionKey}'))
-          .timeout(final Duration(seconds: 10));
+          .timeout(Duration(seconds: 10));
 
       if (!mounted) return;
       if (dRes.statusCode != 200) {
@@ -130,7 +130,7 @@ class _DDState extends State<DeviceDashboardPage> {
             final SizedBox(width: 10),
             Text('Pairing ID not available yet', style: TextStyle(color: _textPrimary)),
           ]),
-          duration: final Duration(seconds: 2)));
+          duration: Duration(seconds: 2)));
       return;
     }
     Clipboard.setData(ClipboardData(text: _pairId));
@@ -143,7 +143,7 @@ class _DDState extends State<DeviceDashboardPage> {
           final SizedBox(width: 10),
           Text('ID copied to clipboard', style: TextStyle(color: _textPrimary)),
         ]),
-        duration: final Duration(seconds: 2)));
+        duration: Duration(seconds: 2)));
   }
 
   @override
@@ -156,7 +156,7 @@ class _DDState extends State<DeviceDashboardPage> {
         _buildGridBackground(),
         SafeArea(child: Column(children: [
           Container(
-            padding: final EdgeInsets.fromLTRB(18, 14, 18, 10),
+            padding: EdgeInsets.fromLTRB(18, 14, 18, 10),
             decoration: BoxDecoration(
               color: _bgCard.withOpacity(0.95),
               border: Border(bottom: BorderSide(color: _neonRed.withOpacity(0.2), width: 1)),
@@ -170,7 +170,7 @@ class _DDState extends State<DeviceDashboardPage> {
                   Text('DEVICE DASHBOARD', 
                       style: TextStyle(color: _neonRed, fontSize: 11, letterSpacing: 2, fontWeight: FontWeight.bold)),
                   Text('@${widget.username}', 
-                      style: final TextStyle(color: _textSecondary, fontSize: 9)),
+                      style: TextStyle(color: _textSecondary, fontSize: 9)),
                 ]),
                 final Spacer(),
                 _statBox('Total', '${_visible.length}', _neonCrimson),
@@ -182,7 +182,7 @@ class _DDState extends State<DeviceDashboardPage> {
                 onTap: _copyPairId,
                 child: Container(
                   width: double.infinity,
-                  padding: final EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
@@ -195,7 +195,7 @@ class _DDState extends State<DeviceDashboardPage> {
                   ),
                   child: Row(children: [
                     Container(
-                      padding: final EdgeInsets.all(6),
+                      padding: EdgeInsets.all(6),
                       decoration: BoxDecoration(
                         color: _neonCrimson.withOpacity(0.15),
                         borderRadius: BorderRadius.circular(8),
@@ -236,7 +236,7 @@ class _DDState extends State<DeviceDashboardPage> {
           if (!_isOwner && !denied && _errorMsg == null && _perm != null && _perm!.approved)
             _banner(Icons.check_circle, 'Access granted. You can see shared devices.', _glowGreen),
 
-          Padding(padding: final EdgeInsets.fromLTRB(16, 12, 16, 10), child: Row(children: [
+          Padding(padding: EdgeInsets.fromLTRB(16, 12, 16, 10), child: Row(children: [
             Text('CONNECTED DEVICES',
                 style: TextStyle(color: _textSecondary, fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 1.5)),
             final Spacer(),
@@ -270,8 +270,8 @@ class _DDState extends State<DeviceDashboardPage> {
                 : _visible.isEmpty
                     ? _buildEmptyState(denied)
                     : GridView.builder(
-                        padding: final EdgeInsets.fromLTRB(14, 4, 14, 100),
-                        gridDelegate: final SliverGridDelegateWithFixedCrossAxisCount(
+                        padding: EdgeInsets.fromLTRB(14, 4, 14, 100),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3, crossAxisSpacing: 10, mainAxisSpacing: 10, childAspectRatio: 0.7),
                         itemCount: _visible.length,
                         itemBuilder: (ctx, i) {
@@ -299,7 +299,7 @@ class _DDState extends State<DeviceDashboardPage> {
       child: Container(
         padding: label != null 
             ? final EdgeInsets.symmetric(horizontal: 12, vertical: 6)
-            : final EdgeInsets.all(6),
+            : EdgeInsets.all(6),
         decoration: BoxDecoration(
           color: _darkOverlay.withOpacity(0.8),
           borderRadius: BorderRadius.circular(8),
@@ -333,7 +333,7 @@ class _DDState extends State<DeviceDashboardPage> {
   Widget _buildEmptyState(bool denied) {
     return Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
       Container(
-        padding: final EdgeInsets.all(20),
+        padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: _darkOverlay,
           shape: BoxShape.circle,
@@ -350,8 +350,8 @@ class _DDState extends State<DeviceDashboardPage> {
       if (!denied) ...[
         final SizedBox(height: 24),
         Container(
-          margin: final EdgeInsets.symmetric(horizontal: 30),
-          padding: final EdgeInsets.all(16),
+          margin: EdgeInsets.symmetric(horizontal: 30),
+          padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: _bgCard,
             borderRadius: BorderRadius.circular(12),
@@ -376,7 +376,7 @@ class _DDState extends State<DeviceDashboardPage> {
       onTap: () => Navigator.push(context, MaterialPageRoute(
           builder: (_) => ControlCenterPage(targetDevice: d, role: widget.role))),
       child: Container(
-        padding: final EdgeInsets.all(10),
+        padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: _bgCard,
           borderRadius: BorderRadius.circular(14),
@@ -387,7 +387,7 @@ class _DDState extends State<DeviceDashboardPage> {
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Icon(Icons.phone_android, color: _textSecondary, size: 14),
             Container(
-              padding: final EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+              padding: EdgeInsets.symmetric(horizontal: 6, vertical: 3),
               decoration: BoxDecoration(
                 color: glowColor.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(6),
@@ -402,7 +402,7 @@ class _DDState extends State<DeviceDashboardPage> {
           ]),
           final Spacer(),
           Text(d['model'] ?? 'Unknown',
-              style: final TextStyle(color: _textPrimary, fontSize: 11, fontWeight: FontWeight.bold),
+              style: TextStyle(color: _textPrimary, fontSize: 11, fontWeight: FontWeight.bold),
               maxLines: 1, overflow: TextOverflow.ellipsis),
           final SizedBox(height: 4),
           Text(d['id']?.substring(0, d['id'].length > 8 ? 8 : d['id'].length) ?? '-',
@@ -424,8 +424,8 @@ class _DDState extends State<DeviceDashboardPage> {
   }
 
   Widget _banner(IconData icon, String msg, Color c) => Container(
-    margin: final EdgeInsets.fromLTRB(14, 10, 14, 0),
-    padding: final EdgeInsets.all(12),
+    margin: EdgeInsets.fromLTRB(14, 10, 14, 0),
+    padding: EdgeInsets.all(12),
     decoration: BoxDecoration(
       color: c.withOpacity(0.08),
       borderRadius: BorderRadius.circular(10),
@@ -441,7 +441,7 @@ class _DDState extends State<DeviceDashboardPage> {
     Text(l, style: TextStyle(color: _neonRed.withOpacity(0.6), fontSize: 8, letterSpacing: 1)),
     final SizedBox(height: 4),
     Container(
-      padding: final EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: c.withOpacity(0.08),
         borderRadius: BorderRadius.circular(8),

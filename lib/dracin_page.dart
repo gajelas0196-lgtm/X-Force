@@ -43,7 +43,7 @@ class _StarPainter extends CustomPainter {
   _StarPainter(this.d, this.t);
   @override void paint(Canvas c, Size s) {
     final p = Paint();
-    for (final dot in d) {
+    for (dot in d) {
       final a = (sin(t * pi * 2 * dot[4] + dot[3]) * 0.5 + 0.5);
       p.color = _C.accentL.withOpacity(a * 0.35);
       c.drawCircle(Offset(dot[0] * s.width, dot[1] * s.height), dot[2], p);

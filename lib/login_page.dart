@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage>
       colors: [primaryNeon, secondaryNeon, goldAccent],
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-      stops: final [0.0, 0.5, 1.0],
+      stops: [0.0, 0.5, 1.0],
     );
     
     backgroundGradient = LinearGradient(
@@ -81,12 +81,12 @@ class _LoginPageState extends State<LoginPage>
   void _initAnim() {
     _controller = AnimationController(
       vsync: this,
-      duration: final Duration(milliseconds: 1000),
+      duration: Duration(milliseconds: 1000),
     )..forward();
 
     _fadeAnim = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
     _slideAnim = Tween<Offset>(
-      begin: final Offset(0, 0.3),
+      begin: Offset(0, 0.3),
       end: Offset.zero,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
   }
@@ -158,7 +158,7 @@ class _LoginPageState extends State<LoginPage>
           "password": password,
           "androidId": androidId ?? "unknown_device",
         },
-      ).timeout(final Duration(seconds: 30));
+      ).timeout(Duration(seconds: 30));
 
       final validData = jsonDecode(validate.body);
 
@@ -255,7 +255,7 @@ class _LoginPageState extends State<LoginPage>
           ),
           content: Text(
             message,
-            style: final TextStyle(color: Colors.white70, fontSize: 14, height: 1.5),
+            style: TextStyle(color: Colors.white70, fontSize: 14, height: 1.5),
           ),
           actions: [
             if (showContact)
@@ -282,7 +282,7 @@ class _LoginPageState extends State<LoginPage>
     return TextButton(
       onPressed: onPressed,
       style: TextButton.styleFrom(
-        padding: final EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
           side: BorderSide(color: color.withOpacity(0.5), width: 1),
@@ -358,7 +358,7 @@ class _LoginPageState extends State<LoginPage>
                 position: _slideAnim,
                 child: Center(
                   child: SingleChildScrollView(
-                    padding: final EdgeInsets.all(24),
+                    padding: EdgeInsets.all(24),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -398,7 +398,7 @@ class _LoginPageState extends State<LoginPage>
                           shaderCallback: (bounds) => neonGradient.createShader(
                             Rect.fromLTWH(0, 0, bounds.width, bounds.height),
                           ),
-                          child: final Text(
+                          child: Text(
                             "XForcez Death",
                             style: TextStyle(
                               fontSize: 28,
@@ -412,7 +412,7 @@ class _LoginPageState extends State<LoginPage>
                         final SizedBox(height: 8),
                         
                         Container(
-                          padding: final EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                           decoration: BoxDecoration(
                             gradient: neonGradient,
                             borderRadius: BorderRadius.circular(20),
@@ -423,7 +423,7 @@ class _LoginPageState extends State<LoginPage>
                               ),
                             ],
                           ),
-                          child: final Text(
+                          child: Text(
                             "POWERED BY HANZ DEPLONGER",
                             style: TextStyle(
                               fontSize: 10,
@@ -457,7 +457,7 @@ class _LoginPageState extends State<LoginPage>
                             child: BackdropFilter(
                               filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                               child: Container(
-                                padding: final EdgeInsets.all(24),
+                                padding: EdgeInsets.all(24),
                                 decoration: BoxDecoration(
                                   color: Colors.black.withOpacity(0.6),
                                   borderRadius: BorderRadius.circular(32),
@@ -516,7 +516,7 @@ class _LoginPageState extends State<LoginPage>
                                                     ),
                                                   ),
                                                 )
-                                              : final Text(
+                                              : Text(
                                                   "SIGN IN →",
                                                   style: TextStyle(
                                                     fontSize: 16,
@@ -598,7 +598,7 @@ class _LoginPageState extends State<LoginPage>
         TextFormField(
           controller: controller,
           obscureText: obscureText,
-          style: final TextStyle(color: Colors.white, fontSize: 14),
+          style: TextStyle(color: Colors.white, fontSize: 14),
           decoration: InputDecoration(
             prefixIcon: Icon(icon, color: primaryNeon, size: 20),
             suffixIcon: isPassword
@@ -631,7 +631,7 @@ class _LoginPageState extends State<LoginPage>
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(color: primaryNeon, width: 2),
             ),
-            contentPadding: final EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           ),
           validator: (value) =>
               value == null || value.isEmpty ? "Please enter ${label.toLowerCase()}" : null,

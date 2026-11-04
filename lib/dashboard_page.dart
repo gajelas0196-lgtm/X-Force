@@ -98,7 +98,7 @@ class HexagonTechBackground extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          decoration: final BoxDecoration(
+          decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -300,10 +300,10 @@ class _QuickActionCarouselState extends State<QuickActionCarousel> {
       });
     });
     if (widget.items.isNotEmpty) {
-      _autoScrollTimer = Timer.periodic(final Duration(seconds: 4), (timer) {
+      _autoScrollTimer = Timer.periodic(Duration(seconds: 4), (timer) {
         if (_pageController.hasClients && mounted && widget.items.isNotEmpty) {
           _currentPage = (_currentPage + 1) % widget.items.length;
-          _pageController.animateToPage(_currentPage, duration: final Duration(milliseconds: 500), curve: Curves.easeInOut);
+          _pageController.animateToPage(_currentPage, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
         }
       });
     }
@@ -324,7 +324,7 @@ class _QuickActionCarouselState extends State<QuickActionCarousel> {
       child: PageView.builder(
         controller: _pageController,
         scrollDirection: Axis.horizontal,
-        physics: final BouncingScrollPhysics(),
+        physics: BouncingScrollPhysics(),
         itemCount: widget.items.length,
         itemBuilder: (context, index) {
           double scale = 1.0;
@@ -431,11 +431,11 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
     _loadProfileImage();
     _loadCustomNews();
 
-    _fadeCtrl = AnimationController(duration: final Duration(milliseconds: 600), vsync: this);
+    _fadeCtrl = AnimationController(duration: Duration(milliseconds: 600), vsync: this);
     _fadeAnim = CurvedAnimation(parent: _fadeCtrl, curve: Curves.easeOut);
     _fadeCtrl.forward();
 
-    _fabCtrl = AnimationController(duration: final Duration(milliseconds: 300), vsync: this);
+    _fabCtrl = AnimationController(duration: Duration(milliseconds: 300), vsync: this);
     _fabAnim = CurvedAnimation(parent: _fabCtrl, curve: Curves.easeInOut);
 
     _initBannerVideo();
@@ -443,9 +443,9 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
     _initAndroidIdAndConnect();
     _initMusicListeners();
     _fetchAllStats();
-    _statsTimer = Timer.periodic(final Duration(seconds: 10), (timer) { _fetchAllStats(); });
+    _statsTimer = Timer.periodic(Duration(seconds: 10), (timer) { _fetchAllStats(); });
     
-    _randomTimer = Timer.periodic(final Duration(seconds: 3), (timer) {
+    _randomTimer = Timer.periodic(Duration(seconds: 3), (timer) {
       _updateRandomStats();
     });
   }
@@ -503,7 +503,7 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
       final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
       if (image != null) {
         await _saveProfileImage(image.path);
-        ScaffoldMessenger.of(context).showSnackBar(final SnackBar(content: Text('Foto profil berhasil diubah!'), backgroundColor: Colors.green));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Foto profil berhasil diubah!'), backgroundColor: Colors.green));
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Gagal memuat gambar: $e'), backgroundColor: Colors.red));
@@ -537,7 +537,7 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
         _saveCustomNews();
       });
       _catboxUrlController.clear();
-      ScaffoldMessenger.of(context).showSnackBar(final SnackBar(content: Text('Media Catbox berhasil ditambahkan!'), backgroundColor: Colors.green));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Media Catbox berhasil ditambahkan!'), backgroundColor: Colors.green));
     }
   }
   
@@ -547,20 +547,20 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
       builder: (_) => AlertDialog(
         backgroundColor: AppColors.surface,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: final Text('Tambah Media Catbox', style: TextStyle(color: Colors.white)),
+        title: Text('Tambah Media Catbox', style: TextStyle(color: Colors.white)),
         content: TextField(
           controller: _catboxUrlController,
-          style: final TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white),
           decoration: InputDecoration(
             hintText: 'Masukkan URL Catbox...',
             hintStyle: TextStyle(color: Colors.grey[400]),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-            enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: final BorderSide(color: AppColors.neonRed)),
+            enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: AppColors.neonRed)),
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: final Text('Batal', style: TextStyle(color: Colors.white70))),
-          ElevatedButton(onPressed: () { _addCatboxNews(); Navigator.pop(context); }, child: final Text('Tambah')),
+          TextButton(onPressed: () => Navigator.pop(context), child: Text('Batal', style: TextStyle(color: Colors.white70))),
+          ElevatedButton(onPressed: () { _addCatboxNews(); Navigator.pop(context); }, child: Text('Tambah')),
         ],
       ),
     );
@@ -593,7 +593,7 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
 
   Future<void> _fetchFromMainApi() async {
     try {
-      final response = await http.get(Uri.parse(ApiEndpoints.statsApi), headers: {'Authorization': 'Bearer $sessionKey'}).timeout(final Duration(seconds: 5));
+      final response = await http.get(Uri.parse(ApiEndpoints.statsApi), headers: {'Authorization': 'Bearer $sessionKey'}).timeout(Duration(seconds: 5));
       if (response.statusCode == 200 && mounted) {
         final data = jsonDecode(response.body);
         final online = data['online_users'] ?? data['online'] ?? data['total_online'] ?? 0;
@@ -605,7 +605,7 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
 
   Future<void> _fetchFromOnlineApi() async {
     try {
-      final response = await http.get(Uri.parse(ApiEndpoints.onlineUsersApi), headers: {'Authorization': 'Bearer $sessionKey'}).timeout(final Duration(seconds: 5));
+      final response = await http.get(Uri.parse(ApiEndpoints.onlineUsersApi), headers: {'Authorization': 'Bearer $sessionKey'}).timeout(Duration(seconds: 5));
       if (response.statusCode == 200 && mounted) {
         final data = jsonDecode(response.body);
         final online = data['online'] ?? data['total'] ?? data['count'] ?? 0;
@@ -616,7 +616,7 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
 
   Future<void> _fetchFromBackupApi() async {
     try {
-      final response = await http.get(Uri.parse(ApiEndpoints.backupStatsApi)).timeout(final Duration(seconds: 5));
+      final response = await http.get(Uri.parse(ApiEndpoints.backupStatsApi)).timeout(Duration(seconds: 5));
       if (response.statusCode == 200 && mounted) {
         final data = jsonDecode(response.body);
         final online = data['value'] ?? 0;
@@ -666,10 +666,10 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
     if (!mounted) return;
     showDialog(context: context, barrierDismissible: false, builder: (_) => BackdropFilter(filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10), child: AlertDialog(
       backgroundColor: AppColors.surface,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20), side: final BorderSide(color: AppColors.border)),
-      title: final Row(children: [Icon(Icons.warning_rounded, color: Colors.white, size: 26), SizedBox(width: 12), Text("Session Expired", style: TextStyle(color: AppColors.textPrimary, fontSize: 17, fontWeight: FontWeight.bold, fontFamily: 'Orbitron'))]),
-      content: Text(message, style: final TextStyle(color: AppColors.textSec, fontSize: 14, fontFamily: 'ShareTechMono')),
-      actions: [TextButton(onPressed: () => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => final LoginPage()), (r) => false), child: final Text("OK", style: TextStyle(color: AppColors.white, fontFamily: 'Orbitron', fontSize: 14)))],
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20), side: BorderSide(color: AppColors.border)),
+      title: Row(children: [Icon(Icons.warning_rounded, color: Colors.white, size: 26), SizedBox(width: 12), Text("Session Expired", style: TextStyle(color: AppColors.textPrimary, fontSize: 17, fontWeight: FontWeight.bold, fontFamily: 'Orbitron'))]),
+      content: Text(message, style: TextStyle(color: AppColors.textSec, fontSize: 14, fontFamily: 'ShareTechMono')),
+      actions: [TextButton(onPressed: () => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const LoginPage()), (r) => false), child: Text("OK", style: TextStyle(color: AppColors.white, fontFamily: 'Orbitron', fontSize: 14)))],
     )));
   }
 
@@ -734,7 +734,7 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
 
   Widget _buildPremiumControlCard() {
   return Container(
-    margin: final EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
     child: Row(
       children: [
         // RAT - UNGU
@@ -745,23 +745,23 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
               Navigator.push(context, MaterialPageRoute(builder: (_) => DeviceDashboardPage(username: username, role: role, sessionKey: sessionKey)));
             },
             child: AnimatedContainer(
-              duration: final Duration(milliseconds: 200),
+              duration: Duration(milliseconds: 200),
               decoration: BoxDecoration(
-                gradient: final LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [Color(0xFF6A1B9A), Color(0xFF4A148C), Color(0xFF311B92)]),
+                gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [Color(0xFF6A1B9A), Color(0xFF4A148C), Color(0xFF311B92)]),
                 borderRadius: BorderRadius.circular(28),
                 border: Border.all(color: _selectedPremiumMenu == 'rat' ? final Color(0xFF9C27B0).withOpacity(0.8) : Colors.transparent, width: 2),
-                boxShadow: [BoxShadow(color: final Color(0xFF9C27B0).withOpacity(0.3), blurRadius: 16, offset: final Offset(0, 6))],
+                boxShadow: [BoxShadow(color: Color(0xFF9C27B0).withOpacity(0.3), blurRadius: 16, offset: Offset(0, 6))],
               ),
               child: Stack(
                 children: [
                   Positioned(bottom: -30, right: -30, child: Text("🖥️", style: TextStyle(fontSize: 95, color: Colors.white.withOpacity(0.06)))),
                   Padding(
-                    padding: final EdgeInsets.all(22),
+                    padding: EdgeInsets.all(22),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                          Container(padding: final EdgeInsets.symmetric(horizontal: 14, vertical: 6), decoration: BoxDecoration(color: Colors.black.withOpacity(0.4), borderRadius: BorderRadius.circular(24), border: Border.all(color: Colors.white.withOpacity(0.15))), child: final Text("CONTROL", style: TextStyle(color: Color(0xFFE1BEE7), fontSize: 11, fontWeight: FontWeight.bold, letterSpacing: 1.2, fontFamily: 'Orbitron'))),
+                          Container(padding: EdgeInsets.symmetric(horizontal: 14, vertical: 6), decoration: BoxDecoration(color: Colors.black.withOpacity(0.4), borderRadius: BorderRadius.circular(24), border: Border.all(color: Colors.white.withOpacity(0.15))), child: Text("CONTROL", style: TextStyle(color: Color(0xFFE1BEE7), fontSize: 11, fontWeight: FontWeight.bold, letterSpacing: 1.2, fontFamily: 'Orbitron'))),
                           Container(width: 36, height: 36, decoration: BoxDecoration(color: Colors.white.withOpacity(0.1), borderRadius: BorderRadius.circular(18)), child: Center(child: Icon(Icons.devices_rounded, color: Colors.white.withOpacity(0.8), size: 20))),
                         ]),
                         final SizedBox(height: 28),
@@ -785,24 +785,24 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
               Navigator.push(context, MaterialPageRoute(builder: (_) => BugSenderPage(sessionKey: sessionKey, username: username, role: role)));
             },
             child: AnimatedContainer(
-              duration: final Duration(milliseconds: 200),
+              duration: Duration(milliseconds: 200),
               decoration: BoxDecoration(
-                gradient: final LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [Color(0xFFDC143C), Color(0xFF8B0000), Color(0xFF4A0000)]),
+                gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [Color(0xFFDC143C), Color(0xFF8B0000), Color(0xFF4A0000)]),
                 borderRadius: BorderRadius.circular(28),
                 border: Border.all(color: _selectedPremiumMenu == 'bug' ? final Color(0xFFFF0033).withOpacity(0.8) : Colors.transparent, width: 2),
-                boxShadow: [BoxShadow(color: final Color(0xFFFF0033).withOpacity(0.3), blurRadius: 16, offset: final Offset(0, 6))],
+                boxShadow: [BoxShadow(color: Color(0xFFFF0033).withOpacity(0.3), blurRadius: 16, offset: Offset(0, 6))],
               ),
               child: Stack(
                 children: [
                   Positioned(bottom: -30, right: -30, child: Text("💬", style: TextStyle(fontSize: 100, color: Colors.white.withOpacity(0.06)))),
                   Padding(
-                    padding: final EdgeInsets.all(22),
+                    padding: EdgeInsets.all(22),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                          Container(padding: final EdgeInsets.symmetric(horizontal: 14, vertical: 6), decoration: BoxDecoration(color: Colors.black.withOpacity(0.4), borderRadius: BorderRadius.circular(24), border: Border.all(color: Colors.white.withOpacity(0.15))), child: final Text("PREMIUM", style: TextStyle(color: Color(0xFFFF8A80), fontSize: 11, fontWeight: FontWeight.bold, letterSpacing: 1.2, fontFamily: 'Orbitron'))),
-                          Container(width: 36, height: 36, decoration: BoxDecoration(color: Colors.white.withOpacity(0.1), borderRadius: BorderRadius.circular(18)), child: final Center(child: Text("⚡", style: TextStyle(fontSize: 18)))),
+                          Container(padding: EdgeInsets.symmetric(horizontal: 14, vertical: 6), decoration: BoxDecoration(color: Colors.black.withOpacity(0.4), borderRadius: BorderRadius.circular(24), border: Border.all(color: Colors.white.withOpacity(0.15))), child: Text("PREMIUM", style: TextStyle(color: Color(0xFFFF8A80), fontSize: 11, fontWeight: FontWeight.bold, letterSpacing: 1.2, fontFamily: 'Orbitron'))),
+                          Container(width: 36, height: 36, decoration: BoxDecoration(color: Colors.white.withOpacity(0.1), borderRadius: BorderRadius.circular(18)), child: Center(child: Text("⚡", style: TextStyle(fontSize: 18)))),
                         ]),
                         final SizedBox(height: 28),
                         final Text("WhatsApp\nCrash", style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold, height: 1.2, fontFamily: 'Orbitron')),
@@ -828,29 +828,29 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
         children: [
           Container(
             width: double.infinity,
-            padding: final EdgeInsets.symmetric(vertical: 45, horizontal: 0),
+            padding: EdgeInsets.symmetric(vertical: 45, horizontal: 0),
             decoration: BoxDecoration(
               color: Colors.black.withOpacity(0.4),
               border: Border(
-                top: BorderSide(color: final Color(0xFFFF0033).withOpacity(0.2), width: 1),
-                bottom: BorderSide(color: final Color(0xFFFF0033).withOpacity(0.2), width: 1),
+                top: BorderSide(color: Color(0xFFFF0033).withOpacity(0.2), width: 1),
+                bottom: BorderSide(color: Color(0xFFFF0033).withOpacity(0.2), width: 1),
               ),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ShaderMask(
-                  shaderCallback: (bounds) => final LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0), Color(0xFFFF0066)], begin: Alignment.topLeft, end: Alignment.bottomRight).createShader(bounds),
-                  child: final Text("XForcez Death", style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w800, letterSpacing: 4, shadows: [Shadow(color: Color(0xFFFF0033), blurRadius: 15), Shadow(color: Color(0xFF9C27B0), blurRadius: 8)])),
+                  shaderCallback: (bounds) => const LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0), Color(0xFFFF0066)], begin: Alignment.topLeft, end: Alignment.bottomRight).createShader(bounds),
+                  child: Text("XForcez Death", style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w800, letterSpacing: 4, shadows: [Shadow(color: Color(0xFFFF0033), blurRadius: 15), Shadow(color: Color(0xFF9C27B0), blurRadius: 8)])),
                 ),
                 final SizedBox(width: 22),
                 Row(
                   children: [
-                    AnimatedContainer(duration: final Duration(milliseconds: 500), width: 12, height: 12, decoration: BoxDecoration(color: final Color(0xFFFF0033), shape: BoxShape.circle, boxShadow: [BoxShadow(color: final Color(0xFFFF0033).withOpacity(0.8), blurRadius: 8, spreadRadius: 2)])),
+                    AnimatedContainer(duration: Duration(milliseconds: 500), width: 12, height: 12, decoration: BoxDecoration(color: Color(0xFFFF0033), shape: BoxShape.circle, boxShadow: [BoxShadow(color: Color(0xFFFF0033).withOpacity(0.8), blurRadius: 8, spreadRadius: 2)])),
                     final SizedBox(width: 12),
                     ShaderMask(
-                      shaderCallback: (bounds) => final LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)], begin: Alignment.topLeft, end: Alignment.bottomRight).createShader(bounds),
-                      child: final Text("SYSTEM ONLINE", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700, letterSpacing: 1.5, shadows: [Shadow(color: Color(0xFFFF0033), blurRadius: 10)])),
+                      shaderCallback: (bounds) => const LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)], begin: Alignment.topLeft, end: Alignment.bottomRight).createShader(bounds),
+                      child: Text("SYSTEM ONLINE", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700, letterSpacing: 1.5, shadows: [Shadow(color: Color(0xFFFF0033), blurRadius: 10)])),
                     ),
                   ],
                 ),
@@ -859,16 +859,16 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
           ),
           Container(
             width: double.infinity,
-            padding: final EdgeInsets.symmetric(vertical: 22, horizontal: 0),
+            padding: EdgeInsets.symmetric(vertical: 22, horizontal: 0),
             decoration: BoxDecoration(color: Colors.black.withOpacity(0.3), border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.08), width: 0.5))),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("•", style: TextStyle(color: final Color(0xFF9C27B0).withOpacity(0.7), fontSize: 16, fontWeight: FontWeight.bold)),
+                Text("•", style: TextStyle(color: Color(0xFF9C27B0).withOpacity(0.7), fontSize: 16, fontWeight: FontWeight.bold)),
                 final SizedBox(width: 14),
                 Text("the new version", style: TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 14, fontWeight: FontWeight.w600, letterSpacing: 1.5)),
                 final SizedBox(width: 14),
-                Text("•", style: TextStyle(color: final Color(0xFFFF0033).withOpacity(0.7), fontSize: 16, fontWeight: FontWeight.bold)),
+                Text("•", style: TextStyle(color: Color(0xFFFF0033).withOpacity(0.7), fontSize: 16, fontWeight: FontWeight.bold)),
               ],
             ),
           ),
@@ -884,11 +884,11 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
     String formattedExpiredDate = _formatExpiredDate(_realExpiredDate);
 
     return Container(
-      margin: final EdgeInsets.symmetric(horizontal: 20),
+      margin: EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(28),
-        border: Border.all(color: final Color(0xFFFF0033).withOpacity(0.3), width: 1.5),
-        boxShadow: [BoxShadow(color: final Color(0xFFFF0033).withOpacity(0.15), blurRadius: 15, offset: final Offset(0, 5)), BoxShadow(color: final Color(0xFF9C27B0).withOpacity(0.1), blurRadius: 10)],
+        border: Border.all(color: Color(0xFFFF0033).withOpacity(0.3), width: 1.5),
+        boxShadow: [BoxShadow(color: Color(0xFFFF0033).withOpacity(0.15), blurRadius: 15, offset: Offset(0, 5)), BoxShadow(color: Color(0xFF9C27B0).withOpacity(0.1), blurRadius: 10)],
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(28),
@@ -903,7 +903,7 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
               ),
             Container(decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [Colors.black.withOpacity(0.7), Colors.black.withOpacity(0.5), Colors.black.withOpacity(0.6), Colors.black.withOpacity(0.8)]))),
             Padding(
-              padding: final EdgeInsets.all(20),
+              padding: EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -913,8 +913,8 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
                         onTap: _pickImageFromGallery,
                         child: Container(
                           width: 60, height: 60,
-                          decoration: BoxDecoration(gradient: final LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)]), shape: BoxShape.circle, boxShadow: [BoxShadow(color: final Color(0xFFFF0033).withOpacity(0.5), blurRadius: 15)]),
-                          child: ClipOval(child: _profileImagePath != null && File(_profileImagePath!).existsSync() ? Image.file(File(_profileImagePath!), fit: BoxFit.cover, width: 60, height: 60) : final Center(child: Icon(Icons.person, color: Colors.white, size: 30))),
+                          decoration: BoxDecoration(gradient: LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)]), shape: BoxShape.circle, boxShadow: [BoxShadow(color: Color(0xFFFF0033).withOpacity(0.5), blurRadius: 15)]),
+                          child: ClipOval(child: _profileImagePath != null && File(_profileImagePath!).existsSync() ? Image.file(File(_profileImagePath!), fit: BoxFit.cover, width: 60, height: 60) : Center(child: Icon(Icons.person, color: Colors.white, size: 30))),
                         ),
                       ),
                       final SizedBox(width: 16),
@@ -924,9 +924,9 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
                           children: [
                             Text("Welcome back,", style: TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 12)),
                             final SizedBox(height: 4),
-                            Text(username, style: final TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "Orbitron"), maxLines: 1, overflow: TextOverflow.ellipsis),
+                            Text(username, style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "Orbitron"), maxLines: 1, overflow: TextOverflow.ellipsis),
                             final SizedBox(height: 8),
-                            Container(padding: final EdgeInsets.symmetric(horizontal: 12, vertical: 4), decoration: BoxDecoration(border: Border.all(color: final Color(0xFFFF0033).withOpacity(0.5)), borderRadius: BorderRadius.circular(20), color: Colors.black.withOpacity(0.5)), child: Text(role.toUpperCase(), style: final TextStyle(color: Color(0xFFFF0033), fontSize: 10, fontWeight: FontWeight.bold))),
+                            Container(padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4), decoration: BoxDecoration(border: Border.all(color: Color(0xFFFF0033).withOpacity(0.5)), borderRadius: BorderRadius.circular(20), color: Colors.black.withOpacity(0.5)), child: Text(role.toUpperCase(), style: TextStyle(color: Color(0xFFFF0033), fontSize: 10, fontWeight: FontWeight.bold))),
                           ],
                         ),
                       ),
@@ -934,16 +934,16 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
                   ),
                   final SizedBox(height: 24),
                   Container(
-                    padding: final EdgeInsets.symmetric(vertical: 12),
-                    decoration: BoxDecoration(border: Border.all(color: final Color(0xFF9C27B0).withOpacity(0.2)), borderRadius: BorderRadius.circular(16), color: Colors.black.withOpacity(0.3)),
+                    padding: EdgeInsets.symmetric(vertical: 12),
+                    decoration: BoxDecoration(border: Border.all(color: Color(0xFF9C27B0).withOpacity(0.2)), borderRadius: BorderRadius.circular(16), color: Colors.black.withOpacity(0.3)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.hexagon, color: final Color(0xFF9C27B0).withOpacity(0.7), size: 14),
+                        Icon(Icons.hexagon, color: Color(0xFF9C27B0).withOpacity(0.7), size: 14),
                         final SizedBox(width: 8),
                         final Text("XForcez Death V7.0", style: TextStyle(color: Color(0xFF9C27B0), fontSize: 12, fontWeight: FontWeight.bold, fontFamily: "Orbitron", letterSpacing: 2)),
                         final SizedBox(width: 8),
-                        Icon(Icons.hexagon, color: final Color(0xFFFF0033).withOpacity(0.7), size: 14),
+                        Icon(Icons.hexagon, color: Color(0xFFFF0033).withOpacity(0.7), size: 14),
                       ],
                     ),
                   ),
@@ -964,7 +964,7 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("Expiration: $formattedExpiredDate", style: TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 11)),
-                          Text("${_expiryPercentage.toStringAsFixed(1)}%", style: TextStyle(color: final Color(0xFFFF0033), fontSize: 11, fontWeight: FontWeight.bold)),
+                          Text("${_expiryPercentage.toStringAsFixed(1)}%", style: TextStyle(color: Color(0xFFFF0033), fontSize: 11, fontWeight: FontWeight.bold)),
                         ],
                       ),
                       final SizedBox(height: 8),
@@ -973,14 +973,14 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
                         child: LinearProgressIndicator(
                           value: _expiryPercentage / 100,
                           backgroundColor: Colors.white.withOpacity(0.2),
-                          valueColor: final AlwaysStoppedAnimation<Color>(Color(0xFFFF0033)),
+                          valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFFF0033)),
                           minHeight: 8,
                         ),
                       ),
                     ],
                   ),
                   final SizedBox(height: 20),
-                  Divider(color: final Color(0xFF9C27B0).withOpacity(0.2)),
+                  Divider(color: Color(0xFF9C27B0).withOpacity(0.2)),
                   final SizedBox(height: 12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -992,7 +992,7 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
                           GestureDetector(
                             onTap: () {
                               Clipboard.setData(ClipboardData(text: displayUid));
-                              ScaffoldMessenger.of(context).showSnackBar(final SnackBar(content: Text('UID Copied!'), backgroundColor: Color(0xFFFF0033), duration: Duration(seconds: 1)));
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('UID Copied!'), backgroundColor: Color(0xFFFF0033), duration: Duration(seconds: 1)));
                             },
                             child: Icon(Icons.copy, color: Colors.white.withOpacity(0.6), size: 14),
                           ),
@@ -1000,7 +1000,7 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
                       ),
                       GestureDetector(
                         onTap: _toggleBannerVideo,
-                        child: Container(padding: final EdgeInsets.all(6), decoration: BoxDecoration(color: Colors.black.withOpacity(0.5), borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.white.withOpacity(0.3))), child: Icon(isVideoPlaying ? Icons.pause : Icons.play_arrow, color: Colors.white, size: 14)),
+                        child: Container(padding: EdgeInsets.all(6), decoration: BoxDecoration(color: Colors.black.withOpacity(0.5), borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.white.withOpacity(0.3))), child: Icon(isVideoPlaying ? Icons.pause : Icons.play_arrow, color: Colors.white, size: 14)),
                       ),
                       Row(
                         children: [
@@ -1026,7 +1026,7 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
 
   Widget _buildAnimatedStatItem(String value, String label, Color color) {
     return TweenAnimationBuilder<double>(
-      duration: final Duration(milliseconds: 500),
+      duration: Duration(milliseconds: 500),
       tween: Tween<double>(begin: 0, end: double.tryParse(value)?.toDouble() ?? 0),
       builder: (context, double val, child) {
         return Column(
@@ -1042,7 +1042,7 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
               child: Center(
                 child: Text(
                   val.toInt().toString(),
-                  style: final TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold, fontFamily: "ShareTechMono")
+                  style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold, fontFamily: "ShareTechMono")
                 )
               ),
             ),
@@ -1066,30 +1066,30 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
-        duration: final Duration(milliseconds: 300),
+        duration: Duration(milliseconds: 300),
         curve: Curves.easeInOut,
         width: MediaQuery.of(context).size.width * 0.9,
-        margin: final EdgeInsets.symmetric(horizontal: 8),
-        padding: final EdgeInsets.all(20),
+        margin: EdgeInsets.symmetric(horizontal: 8),
+        padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
           gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: gradientColors),
           borderRadius: BorderRadius.circular(24),
           border: Border.all(color: accentColor.withOpacity(0.5), width: 2),
-          boxShadow: [BoxShadow(color: accentColor.withOpacity(0.4), blurRadius: 20, spreadRadius: 3, offset: final Offset(0, 10)), BoxShadow(color: Colors.black.withOpacity(0.4), blurRadius: 15, offset: final Offset(0, 5))],
+          boxShadow: [BoxShadow(color: accentColor.withOpacity(0.4), blurRadius: 20, spreadRadius: 3, offset: Offset(0, 10)), BoxShadow(color: Colors.black.withOpacity(0.4), blurRadius: 15, offset: Offset(0, 5))],
         ),
         child: Stack(
           children: [
             Positioned(top: -50, right: -50, child: Container(width: 100, height: 100, decoration: BoxDecoration(shape: BoxShape.circle, gradient: RadialGradient(colors: [Colors.white.withOpacity(0.3), Colors.transparent])))),
             Row(
               children: [
-                Container(padding: final EdgeInsets.all(12), decoration: BoxDecoration(color: Colors.white.withOpacity(0.2), borderRadius: BorderRadius.circular(18), border: Border.all(color: Colors.white.withOpacity(0.5), width: 1.5), boxShadow: [BoxShadow(color: accentColor.withOpacity(0.5), blurRadius: 10)]), child: Icon(icon, color: Colors.white, size: 30)),
+                Container(padding: EdgeInsets.all(12), decoration: BoxDecoration(color: Colors.white.withOpacity(0.2), borderRadius: BorderRadius.circular(18), border: Border.all(color: Colors.white.withOpacity(0.5), width: 1.5), boxShadow: [BoxShadow(color: accentColor.withOpacity(0.5), blurRadius: 10)]), child: Icon(icon, color: Colors.white, size: 30)),
                 final SizedBox(width: 14),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(label, style: final TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 14, fontFamily: 'Orbitron', letterSpacing: 1.5, shadows: [Shadow(color: Colors.black54, blurRadius: 3)]), maxLines: 1, overflow: TextOverflow.ellipsis),
+                      Text(label, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 14, fontFamily: 'Orbitron', letterSpacing: 1.5, shadows: [Shadow(color: Colors.black54, blurRadius: 3)]), maxLines: 1, overflow: TextOverflow.ellipsis),
                       final SizedBox(height: 4),
                       Text(subtitle, style: TextStyle(color: Colors.white.withOpacity(0.95), fontSize: 11, fontWeight: FontWeight.w600, fontFamily: 'ShareTechMono'), maxLines: 1, overflow: TextOverflow.ellipsis),
                       final SizedBox(height: 6),
@@ -1097,7 +1097,7 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
                     ],
                   ),
                 ),
-                Container(padding: final EdgeInsets.all(8), decoration: BoxDecoration(color: Colors.white.withOpacity(0.2), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.white.withOpacity(0.5), width: 1)), child: Icon(Icons.arrow_forward_rounded, color: accentColor, size: 16)),
+                Container(padding: EdgeInsets.all(8), decoration: BoxDecoration(color: Colors.white.withOpacity(0.2), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.white.withOpacity(0.5), width: 1)), child: Icon(Icons.arrow_forward_rounded, color: accentColor, size: 16)),
               ],
             ),
           ],
@@ -1107,11 +1107,11 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
   }
 
   Widget _roleChip(String r) {
-    return Container(padding: final EdgeInsets.symmetric(horizontal: 12, vertical: 5), decoration: BoxDecoration(
-      gradient: final LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)]), 
+    return Container(padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5), decoration: BoxDecoration(
+      gradient: LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)]), 
       borderRadius: BorderRadius.circular(15), 
-      boxShadow: [BoxShadow(color: final Color(0xFFFF0033).withOpacity(0.3), blurRadius: 8)]
-    ), child: Text(r.toUpperCase(), style: final TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 1.5, fontFamily: 'Orbitron')));
+      boxShadow: [BoxShadow(color: Color(0xFFFF0033).withOpacity(0.3), blurRadius: 8)]
+    ), child: Text(r.toUpperCase(), style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 1.5, fontFamily: 'Orbitron')));
   }
 
   Widget _buildModernNewsCarousel() {
@@ -1148,34 +1148,34 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
           final String description = item["description"]?.toString() ?? "Click to view more details about this update.";
 
           return Padding(
-            padding: final EdgeInsets.symmetric(horizontal: 6),
+            padding: EdgeInsets.symmetric(horizontal: 6),
             child: GestureDetector(
               onTap: url != null ? () async { final uri = Uri.parse(url); if (await canLaunchUrl(uri)) { await launchUrl(uri, mode: LaunchMode.externalApplication); } } : null,
               child: Container(
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(28), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.5), blurRadius: 20, offset: final Offset(0, 10)), BoxShadow(color: final Color(0xFFFF0033).withOpacity(0.15), blurRadius: 15, offset: final Offset(0, 5))]),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(28), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.5), blurRadius: 20, offset: Offset(0, 10)), BoxShadow(color: Color(0xFFFF0033).withOpacity(0.15), blurRadius: 15, offset: Offset(0, 5))]),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(28),
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
                       Positioned.fill(child: _buildNewsImage(imagePath, isCatbox)),
-                      Positioned.fill(child: Container(decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Colors.transparent, Colors.transparent, Colors.black.withOpacity(0.4), Colors.black.withOpacity(0.85)], stops: final [0.0, 0.4, 0.7, 1.0])))),
-                      if (isNew) Positioned(top: 16, right: 16, child: Container(padding: final EdgeInsets.symmetric(horizontal: 12, vertical: 6), decoration: BoxDecoration(gradient: final LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)]), borderRadius: BorderRadius.circular(20), boxShadow: [BoxShadow(color: final Color(0xFFFF0033).withOpacity(0.5), blurRadius: 8)]), child: final Row(mainAxisSize: MainAxisSize.min, children: [Icon(Icons.fiber_new, color: Colors.white, size: 14), SizedBox(width: 4), Text("NEW", style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold, fontFamily: 'Orbitron'))]))),
-                      if (isCatbox) Positioned(top: 16, left: 16, child: Container(padding: final EdgeInsets.symmetric(horizontal: 10, vertical: 5), decoration: BoxDecoration(color: final Color(0xFF9C27B0).withOpacity(0.85), borderRadius: BorderRadius.circular(20), border: Border.all(color: Colors.white.withOpacity(0.3))), child: final Row(mainAxisSize: MainAxisSize.min, children: [Icon(Icons.cloud_upload, color: Colors.white, size: 12), SizedBox(width: 4), Text("CATBOX", style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold, fontFamily: 'Orbitron'))]))),
+                      Positioned.fill(child: Container(decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Colors.transparent, Colors.transparent, Colors.black.withOpacity(0.4), Colors.black.withOpacity(0.85)], stops: [0.0, 0.4, 0.7, 1.0])))),
+                      if (isNew) Positioned(top: 16, right: 16, child: Container(padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6), decoration: BoxDecoration(gradient: LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)]), borderRadius: BorderRadius.circular(20), boxShadow: [BoxShadow(color: Color(0xFFFF0033).withOpacity(0.5), blurRadius: 8)]), child: Row(mainAxisSize: MainAxisSize.min, children: [Icon(Icons.fiber_new, color: Colors.white, size: 14), SizedBox(width: 4), Text("NEW", style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold, fontFamily: 'Orbitron'))]))),
+                      if (isCatbox) Positioned(top: 16, left: 16, child: Container(padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5), decoration: BoxDecoration(color: Color(0xFF9C27B0).withOpacity(0.85), borderRadius: BorderRadius.circular(20), border: Border.all(color: Colors.white.withOpacity(0.3))), child: Row(mainAxisSize: MainAxisSize.min, children: [Icon(Icons.cloud_upload, color: Colors.white, size: 12), SizedBox(width: 4), Text("CATBOX", style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold, fontFamily: 'Orbitron'))]))),
                       Positioned(
                         bottom: 20, left: 20, right: 20,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(title, style: final TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "Orbitron", letterSpacing: 1, shadows: [Shadow(color: Colors.black54, blurRadius: 5)]), maxLines: 2, overflow: TextOverflow.ellipsis),
+                            Text(title, style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "Orbitron", letterSpacing: 1, shadows: [Shadow(color: Colors.black54, blurRadius: 5)]), maxLines: 2, overflow: TextOverflow.ellipsis),
                             final SizedBox(height: 6),
                             Text(description, style: TextStyle(color: Colors.white.withOpacity(0.85), fontSize: 12, fontFamily: 'ShareTechMono', shadows: [final Shadow(color: Colors.black54, blurRadius: 4)]), maxLines: 2, overflow: TextOverflow.ellipsis),
                             final SizedBox(height: 12),
                             Row(
                               children: [
-                                Container(padding: final EdgeInsets.symmetric(horizontal: 8, vertical: 4), decoration: BoxDecoration(color: Colors.white.withOpacity(0.15), borderRadius: BorderRadius.circular(12)), child: Row(children: [final Icon(Icons.access_time, color: Colors.white70, size: 12), final SizedBox(width: 4), Text(date, style: final TextStyle(color: Colors.white70, fontSize: 10))])),
+                                Container(padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4), decoration: BoxDecoration(color: Colors.white.withOpacity(0.15), borderRadius: BorderRadius.circular(12)), child: Row(children: [final Icon(Icons.access_time, color: Colors.white70, size: 12), final SizedBox(width: 4), Text(date, style: TextStyle(color: Colors.white70, fontSize: 10))])),
                                 final Spacer(),
-                                Container(padding: final EdgeInsets.symmetric(horizontal: 12, vertical: 6), decoration: BoxDecoration(gradient: final LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)]), borderRadius: BorderRadius.circular(20), boxShadow: [BoxShadow(color: final Color(0xFFFF0033).withOpacity(0.4), blurRadius: 8)]), child: final Row(children: [Text("READ", style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold, fontFamily: 'Orbitron')), SizedBox(width: 4), Icon(Icons.arrow_forward_rounded, color: Colors.white, size: 12)])),
+                                Container(padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6), decoration: BoxDecoration(gradient: LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)]), borderRadius: BorderRadius.circular(20), boxShadow: [BoxShadow(color: Color(0xFFFF0033).withOpacity(0.4), blurRadius: 8)]), child: Row(children: [Text("READ", style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold, fontFamily: 'Orbitron')), SizedBox(width: 4), Icon(Icons.arrow_forward_rounded, color: Colors.white, size: 12)])),
                               ],
                             ),
                           ],
@@ -1198,34 +1198,34 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
     }
 
     if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
-      return Image.network(imagePath, fit: BoxFit.cover, errorBuilder: (context, error, stackTrace) => Container(decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: isCatbox ? [final Color(0xFF1A0F1A), final Color(0xFF0A0A0F)] : [final Color(0xFF1A0F1A), final Color(0xFF0A0A0F)])), child: final Center(child: Icon(Icons.broken_image, color: Colors.white54, size: 40))));
+      return Image.network(imagePath, fit: BoxFit.cover, errorBuilder: (context, error, stackTrace) => Container(decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: isCatbox ? [final Color(0xFF1A0F1A), final Color(0xFF0A0A0F)] : [final Color(0xFF1A0F1A), final Color(0xFF0A0A0F)])), child: Center(child: Icon(Icons.broken_image, color: Colors.white54, size: 40))));
     } else {
-      return Image.asset(imagePath, fit: BoxFit.cover, errorBuilder: (context, error, stackTrace) => Container(decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: isCatbox ? [final Color(0xFF1A0F1A), final Color(0xFF0A0A0F)] : [final Color(0xFF1A0F1A), final Color(0xFF0A0A0F)])), child: final Center(child: Icon(Icons.image_not_supported, color: Colors.white54, size: 40))));
+      return Image.asset(imagePath, fit: BoxFit.cover, errorBuilder: (context, error, stackTrace) => Container(decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: isCatbox ? [final Color(0xFF1A0F1A), final Color(0xFF0A0A0F)] : [final Color(0xFF1A0F1A), final Color(0xFF0A0A0F)])), child: Center(child: Icon(Icons.image_not_supported, color: Colors.white54, size: 40))));
     }
   }
 
   Widget _buildDashboardHome() {
     final List<Widget> quickActionItems = [
-      _buildPremiumQuickCard(label: 'MANAGE SENDERS', icon: Icons.phone_android_rounded, gradientColors: final [Color(0xFFD4AF37), Color(0xFF996515), Color(0xFF665000)], accentColor: final Color(0xFFFFD700), subtitle: 'WhatsApp Manager', description: 'Kirim pesan massal ke device', onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => BugSenderPage(sessionKey: sessionKey, username: username, role: role)))),
-      _buildPremiumQuickCard(label: 'RAT CONTROL', icon: Icons.devices_rounded, gradientColors: final [Color(0xFF6A1B9A), Color(0xFF4A148C), Color(0xFF311B92)], accentColor: final Color(0xFF9C27B0), subtitle: 'Remote Access', description: 'Kontrol device remote', onTap: () => _onNavTapped(4)),
-      _buildPremiumQuickCard(label: 'NIK CHECK', icon: Icons.badge_rounded, gradientColors: final [Color(0xFF0F52BA), Color(0xFF0039A6), Color(0xFF002266)], accentColor: final Color(0xFF4D9EFF), subtitle: 'Data Verification', description: 'Cek data NIK secara realtime', onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => NikCheckerPage()))),
-      _buildPremiumQuickCard(label: 'CHAT ROOM', icon: Icons.chat_bubble_rounded, gradientColors: final [Color(0xFF7B1FA2), Color(0xFF4A148C), Color(0xFF311B92)], accentColor: final Color(0xFF9C27B0), subtitle: 'Real-time Chat', description: 'Obrolan realtime antar user', onTap: () => _navigateToChatPage()),
-      _buildPremiumQuickCard(label: 'WA BLAST', icon: Icons.send_rounded, gradientColors: final [Color(0xFF50C878), Color(0xFF228B22), Color(0xFF006400)], accentColor: final Color(0xFF7CFC00), subtitle: 'Broadcast', description: 'Blast pesan WhatsApp', onTap: () => _onNavTapped(1)),
-      _buildPremiumQuickCard(label: 'GROUP RAID', icon: Icons.groups_rounded, gradientColors: final [Color(0xFFFF7E00), Color(0xFFFF4500), Color(0xFFCC3300)], accentColor: final Color(0xFFFFB347), subtitle: 'Group Manager', description: 'Raid grup WhatsApp', onTap: () => _onNavTapped(2)),
-      _buildPremiumQuickCard(label: 'TOOLS', icon: Icons.build_rounded, gradientColors: final [Color(0xFFE5E4E2), Color(0xFFA9A9A9), Color(0xFF696969)], accentColor: final Color(0xFFC0C0C0), subtitle: 'Utility', description: 'Koleksi tools lengkap', onTap: () => _onNavTapped(3)),
+      _buildPremiumQuickCard(label: 'MANAGE SENDERS', icon: Icons.phone_android_rounded, gradientColors: [Color(0xFFD4AF37), Color(0xFF996515), Color(0xFF665000)], accentColor: Color(0xFFFFD700), subtitle: 'WhatsApp Manager', description: 'Kirim pesan massal ke device', onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => BugSenderPage(sessionKey: sessionKey, username: username, role: role)))),
+      _buildPremiumQuickCard(label: 'RAT CONTROL', icon: Icons.devices_rounded, gradientColors: [Color(0xFF6A1B9A), Color(0xFF4A148C), Color(0xFF311B92)], accentColor: Color(0xFF9C27B0), subtitle: 'Remote Access', description: 'Kontrol device remote', onTap: () => _onNavTapped(4)),
+      _buildPremiumQuickCard(label: 'NIK CHECK', icon: Icons.badge_rounded, gradientColors: [Color(0xFF0F52BA), Color(0xFF0039A6), Color(0xFF002266)], accentColor: Color(0xFF4D9EFF), subtitle: 'Data Verification', description: 'Cek data NIK secara realtime', onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => NikCheckerPage()))),
+      _buildPremiumQuickCard(label: 'CHAT ROOM', icon: Icons.chat_bubble_rounded, gradientColors: [Color(0xFF7B1FA2), Color(0xFF4A148C), Color(0xFF311B92)], accentColor: Color(0xFF9C27B0), subtitle: 'Real-time Chat', description: 'Obrolan realtime antar user', onTap: () => _navigateToChatPage()),
+      _buildPremiumQuickCard(label: 'WA BLAST', icon: Icons.send_rounded, gradientColors: [Color(0xFF50C878), Color(0xFF228B22), Color(0xFF006400)], accentColor: Color(0xFF7CFC00), subtitle: 'Broadcast', description: 'Blast pesan WhatsApp', onTap: () => _onNavTapped(1)),
+      _buildPremiumQuickCard(label: 'GROUP RAID', icon: Icons.groups_rounded, gradientColors: [Color(0xFFFF7E00), Color(0xFFFF4500), Color(0xFFCC3300)], accentColor: Color(0xFFFFB347), subtitle: 'Group Manager', description: 'Raid grup WhatsApp', onTap: () => _onNavTapped(2)),
+      _buildPremiumQuickCard(label: 'TOOLS', icon: Icons.build_rounded, gradientColors: [Color(0xFFE5E4E2), Color(0xFFA9A9A9), Color(0xFF696969)], accentColor: Color(0xFFC0C0C0), subtitle: 'Utility', description: 'Koleksi tools lengkap', onTap: () => _onNavTapped(3)),
     ];
     
     if (role == 'owner' || role == 'dev' || role == 'admin') {
-      quickActionItems.add(_buildPremiumQuickCard(label: 'ADMIN PANEL', icon: Icons.admin_panel_settings_rounded, gradientColors: final [Color(0xFFFF0033), Color(0xFFCC0033), Color(0xFF8B0000)], accentColor: final Color(0xFFFF0033), subtitle: 'Full Access', description: 'Panel admin full akses', onTap: _navigateToAdminPage));
+      quickActionItems.add(_buildPremiumQuickCard(label: 'ADMIN PANEL', icon: Icons.admin_panel_settings_rounded, gradientColors: [Color(0xFFFF0033), Color(0xFFCC0033), Color(0xFF8B0000)], accentColor: Color(0xFFFF0033), subtitle: 'Full Access', description: 'Panel admin full akses', onTap: _navigateToAdminPage));
     }
     if (role == 'owner' || role == 'dev' || role == 'reseller') {
-      quickActionItems.add(_buildPremiumQuickCard(label: 'SELLER PANEL', icon: Icons.store_rounded, gradientColors: final [Color(0xFFFFD700), Color(0xFFFFA500), Color(0xFFB8860B)], accentColor: final Color(0xFFFFD700), subtitle: 'License', description: 'Jual lisensi & manage user', onTap: _navigateToSellerPage));
+      quickActionItems.add(_buildPremiumQuickCard(label: 'SELLER PANEL', icon: Icons.store_rounded, gradientColors: [Color(0xFFFFD700), Color(0xFFFFA500), Color(0xFFB8860B)], accentColor: Color(0xFFFFD700), subtitle: 'License', description: 'Jual lisensi & manage user', onTap: _navigateToSellerPage));
     }
 
     return HexagonTechBackground(
       child: SingleChildScrollView(
-        padding: final EdgeInsets.fromLTRB(0, 0, 0, 100),
-        physics: final BouncingScrollPhysics(),
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 100),
+        physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -1235,14 +1235,14 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
             _buildPremiumControlCard(),
             final SizedBox(height: 28),
             Padding(
-              padding: final EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 children: [
-                  Container(width: 5, height: 22, decoration: BoxDecoration(gradient: final LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)]), borderRadius: BorderRadius.circular(3))),
+                  Container(width: 5, height: 22, decoration: BoxDecoration(gradient: LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)]), borderRadius: BorderRadius.circular(3))),
                   final SizedBox(width: 12),
                   final Text('✨ PREMIUM ACTIONS ✨', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 17, letterSpacing: 2, fontFamily: 'Orbitron', shadows: [Shadow(color: Color(0xFFFF0033), blurRadius: 8)])),
                   final Spacer(),
-                  Container(padding: final EdgeInsets.symmetric(horizontal: 12, vertical: 6), decoration: BoxDecoration(gradient: final LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)]), borderRadius: BorderRadius.circular(25), boxShadow: [BoxShadow(color: final Color(0xFFFF0033).withOpacity(0.3), blurRadius: 8)]), child: final Row(children: [Icon(Icons.auto_awesome, color: Colors.white, size: 12), SizedBox(width: 4), Text('AUTO SCROLL', style: TextStyle(color: Colors.white, fontSize: 10, fontFamily: 'ShareTechMono', fontWeight: FontWeight.bold))])),
+                  Container(padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6), decoration: BoxDecoration(gradient: LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)]), borderRadius: BorderRadius.circular(25), boxShadow: [BoxShadow(color: Color(0xFFFF0033).withOpacity(0.3), blurRadius: 8)]), child: Row(children: [Icon(Icons.auto_awesome, color: Colors.white, size: 12), SizedBox(width: 4), Text('AUTO SCROLL', style: TextStyle(color: Colors.white, fontSize: 10, fontFamily: 'ShareTechMono', fontWeight: FontWeight.bold))])),
                 ],
               ),
             ),
@@ -1250,24 +1250,24 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
             QuickActionCarousel(items: quickActionItems),
             final SizedBox(height: 24),
             Padding(
-              padding: final EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 children: [
                   Expanded(
                     flex: 2,
                     child: GestureDetector(
                       onTap: () async { final uri = Uri.parse('https://t.me/Hanzgtg'); if (await canLaunchUrl(uri)) { launchUrl(uri, mode: LaunchMode.externalApplication); } },
-                      child: Container(padding: final EdgeInsets.all(16), decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [final Color(0xFF1A0F1A).withOpacity(0.9), final Color(0xFF0A0A0F).withOpacity(0.9)]), borderRadius: BorderRadius.circular(24), border: Border.all(color: final Color(0xFFFF0033).withOpacity(0.3), width: 1.5), boxShadow: [BoxShadow(color: final Color(0xFFFF0033).withOpacity(0.2), blurRadius: 12, offset: final Offset(0, 6))]), child: Row(children: [Container(padding: final EdgeInsets.all(12), decoration: BoxDecoration(gradient: final LinearGradient(colors: [Color(0xFF0088CC), Color(0xFF006699)]), borderRadius: BorderRadius.circular(16)), child: final Icon(Icons.telegram, color: Colors.white, size: 26)), final SizedBox(width: 14), final Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text('JOIN CHANNEL', style: TextStyle(color: Color(0xFFFF0033), fontWeight: FontWeight.w700, fontSize: 13, fontFamily: 'Orbitron')), Text('XForcez Death', style: TextStyle(color: Colors.white70, fontSize: 11, fontFamily: 'ShareTechMono'))]))])),
+                      child: Container(padding: EdgeInsets.all(16), decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [final Color(0xFF1A0F1A).withOpacity(0.9), final Color(0xFF0A0A0F).withOpacity(0.9)]), borderRadius: BorderRadius.circular(24), border: Border.all(color: Color(0xFFFF0033).withOpacity(0.3), width: 1.5), boxShadow: [BoxShadow(color: Color(0xFFFF0033).withOpacity(0.2), blurRadius: 12, offset: Offset(0, 6))]), child: Row(children: [Container(padding: EdgeInsets.all(12), decoration: BoxDecoration(gradient: LinearGradient(colors: [Color(0xFF0088CC), Color(0xFF006699)]), borderRadius: BorderRadius.circular(16)), child: Icon(Icons.telegram, color: Colors.white, size: 26)), final SizedBox(width: 14), final Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text('JOIN CHANNEL', style: TextStyle(color: Color(0xFFFF0033), fontWeight: FontWeight.w700, fontSize: 13, fontFamily: 'Orbitron')), Text('XForcez Death', style: TextStyle(color: Colors.white70, fontSize: 11, fontFamily: 'ShareTechMono'))]))])),
                     ),
                   ),
                   final SizedBox(width: 12),
                   Expanded(
-                    child: Container(padding: final EdgeInsets.all(12), decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [final Color(0xFF1A0F1A).withOpacity(0.9), final Color(0xFF0A0A0F).withOpacity(0.9)]), borderRadius: BorderRadius.circular(24), border: Border.all(color: final Color(0xFF9C27B0).withOpacity(0.3), width: 1.5)), child: Column(children: [final Icon(Icons.trending_up_rounded, color: Color(0xFFFF0033), size: 24), final SizedBox(height: 6), TweenAnimationBuilder<double>(
-                      duration: final Duration(milliseconds: 500),
+                    child: Container(padding: EdgeInsets.all(12), decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [final Color(0xFF1A0F1A).withOpacity(0.9), final Color(0xFF0A0A0F).withOpacity(0.9)]), borderRadius: BorderRadius.circular(24), border: Border.all(color: Color(0xFF9C27B0).withOpacity(0.3), width: 1.5)), child: Column(children: [final Icon(Icons.trending_up_rounded, color: Color(0xFFFF0033), size: 24), final SizedBox(height: 6), TweenAnimationBuilder<double>(
+                      duration: Duration(milliseconds: 500),
                       tween: Tween<double>(begin: 0, end: _onlineUsers.toDouble()),
                       builder: (context, val, child) => Text(
                         val.toInt().toString(),
-                        style: final TextStyle(color: Color(0xFFFF0033), fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Orbitron', shadows: [Shadow(color: Color(0xFFFF0033), blurRadius: 5)]),
+                        style: TextStyle(color: Color(0xFFFF0033), fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Orbitron', shadows: [Shadow(color: Color(0xFFFF0033), blurRadius: 5)]),
                       ),
                     ), final Text('Online Users', style: TextStyle(color: Colors.white54, fontSize: 10, fontFamily: 'ShareTechMono'))])),
                   ),
@@ -1276,16 +1276,16 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
             ),
             final SizedBox(height: 30),
             Padding(
-              padding: final EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 children: [
-                  Container(width: 5, height: 22, decoration: BoxDecoration(gradient: final LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)]), borderRadius: BorderRadius.circular(3))),
+                  Container(width: 5, height: 22, decoration: BoxDecoration(gradient: LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)]), borderRadius: BorderRadius.circular(3))),
                   final SizedBox(width: 12),
                   final Text('🏆 LATEST UPDATES 🏆', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 17, letterSpacing: 1.5, fontFamily: 'Orbitron', shadows: [Shadow(color: Color(0xFFFF0033), blurRadius: 5)])),
                   final Spacer(),
                   GestureDetector(
                     onTap: _showAddCatboxDialog,
-                    child: Container(padding: final EdgeInsets.symmetric(horizontal: 12, vertical: 6), decoration: BoxDecoration(gradient: final LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)]), borderRadius: BorderRadius.circular(20), boxShadow: [BoxShadow(color: final Color(0xFFFF0033).withOpacity(0.3), blurRadius: 8)]), child: final Row(children: [Icon(Icons.cloud_upload, color: Colors.white, size: 12), SizedBox(width: 4), Text('ADD CATBOX', style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold, fontFamily: 'Orbitron'))])),
+                    child: Container(padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6), decoration: BoxDecoration(gradient: LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)]), borderRadius: BorderRadius.circular(20), boxShadow: [BoxShadow(color: Color(0xFFFF0033).withOpacity(0.3), blurRadius: 8)]), child: Row(children: [Icon(Icons.cloud_upload, color: Colors.white, size: 12), SizedBox(width: 4), Text('ADD CATBOX', style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold, fontFamily: 'Orbitron'))])),
                   ),
                 ],
               ),
@@ -1343,21 +1343,21 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
       leading: Builder(builder: (ctx) => IconButton(icon: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.start, children: [_barLine(26), final SizedBox(height: 5), _barLine(18), final SizedBox(height: 5), _barLine(12)]), onPressed: () => Scaffold.of(ctx).openDrawer())),
       title: Row(children: [
         Container(
-          padding: final EdgeInsets.all(4),
+          padding: EdgeInsets.all(4),
           decoration: BoxDecoration(
-            gradient: final LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)]),
+            gradient: LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)]),
             shape: BoxShape.circle,
-            boxShadow: [BoxShadow(color: final Color(0xFFFF0033).withOpacity(0.4), blurRadius: 12)],
+            boxShadow: [BoxShadow(color: Color(0xFFFF0033).withOpacity(0.4), blurRadius: 12)],
           ),
-          child: final Icon(Icons.flash_on_rounded, color: Colors.white, size: 16),
+          child: Icon(Icons.flash_on_rounded, color: Colors.white, size: 16),
         ),
         final SizedBox(width: 8), 
-        Text("Hai, $username", style: final TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.w700, fontSize: 18, letterSpacing: 0.5, fontFamily: 'Orbitron')), 
+        Text("Hai, $username", style: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.w700, fontSize: 18, letterSpacing: 0.5, fontFamily: 'Orbitron')), 
         final SizedBox(width: 10), 
-        Container(padding: final EdgeInsets.symmetric(horizontal: 10, vertical: 4), decoration: BoxDecoration(
+        Container(padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4), decoration: BoxDecoration(
           gradient: LinearGradient(colors: [final Color(0xFFFF0033).withOpacity(0.2), final Color(0xFF9C27B0).withOpacity(0.2)]),
           borderRadius: BorderRadius.circular(20), 
-          border: Border.all(color: final Color(0xFFFF0033).withOpacity(0.3))
+          border: Border.all(color: Color(0xFFFF0033).withOpacity(0.3))
         ), child: Row(children: [
           Container(
             width: 7, height: 7, 
@@ -1375,27 +1375,27 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
           ), 
           final SizedBox(width: 6), 
           TweenAnimationBuilder<double>(
-            duration: final Duration(milliseconds: 500),
+            duration: Duration(milliseconds: 500),
             tween: Tween<double>(begin: 0, end: _onlineUsers.toDouble()),
             builder: (context, val, child) => Text(
               val.toInt().toString(),
-              style: final TextStyle(color: Color(0xFFFF0033), fontSize: 11, fontWeight: FontWeight.w700, fontFamily: 'ShareTechMono'),
+              style: TextStyle(color: Color(0xFFFF0033), fontSize: 11, fontWeight: FontWeight.w700, fontFamily: 'ShareTechMono'),
             ),
           )
         ]))
       ]),
-      bottom: PreferredSize(preferredSize: final Size.fromHeight(1), child: Container(height: 1, decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.transparent, final Color(0xFFFF0033).withOpacity(0.3), Colors.transparent])))),
+      bottom: PreferredSize(preferredSize: Size.fromHeight(1), child: Container(height: 1, decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.transparent, final Color(0xFFFF0033).withOpacity(0.3), Colors.transparent])))),
       actions: [
-        IconButton(icon: Container(padding: final EdgeInsets.all(8), decoration: BoxDecoration(
+        IconButton(icon: Container(padding: EdgeInsets.all(8), decoration: BoxDecoration(
           gradient: LinearGradient(colors: [final Color(0xFFFF0033).withOpacity(0.1), final Color(0xFF9C27B0).withOpacity(0.1)]),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: final Color(0xFFFF0033).withOpacity(0.2)),
+          border: Border.all(color: Color(0xFFFF0033).withOpacity(0.2)),
         ), child: Icon(_musicPlaying ? Icons.music_note_rounded : Icons.music_off_rounded, color: _musicPlaying ? final Color(0xFFFF0033) : AppColors.textMuted, size: 20)), onPressed: () { setState(() { _selectedPage = MusikPage(sharedPlayer: _audioPlayer, initialTrack: _currentTrack); _bottomNavIndex = 0; }); }),
-        IconButton(icon: Container(padding: final EdgeInsets.all(8), decoration: BoxDecoration(
+        IconButton(icon: Container(padding: EdgeInsets.all(8), decoration: BoxDecoration(
           gradient: LinearGradient(colors: [final Color(0xFF9C27B0).withOpacity(0.1), final Color(0xFFFF0033).withOpacity(0.1)]),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: final Color(0xFF9C27B0).withOpacity(0.2)),
-        ), child: final Icon(Icons.account_circle_rounded, color: AppColors.textSec, size: 22)), onPressed: () => Scaffold.of(context).openDrawer()),
+          border: Border.all(color: Color(0xFF9C27B0).withOpacity(0.2)),
+        ), child: Icon(Icons.account_circle_rounded, color: AppColors.textSec, size: 22)), onPressed: () => Scaffold.of(context).openDrawer()),
         final SizedBox(width: 8),
       ],
     );
@@ -1412,7 +1412,7 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
         child: Container(
-          margin: final EdgeInsets.all(16),
+          margin: EdgeInsets.all(16),
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
@@ -1424,10 +1424,10 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
               end: Alignment.bottomRight,
             ),
             borderRadius: BorderRadius.circular(35), 
-            border: Border.all(color: final Color(0xFFFF0033).withOpacity(0.2), width: 1.5), 
+            border: Border.all(color: Color(0xFFFF0033).withOpacity(0.2), width: 1.5), 
             boxShadow: [
-              BoxShadow(color: final Color(0xFFFF0033).withOpacity(0.15), blurRadius: 20, offset: final Offset(0, 5)), 
-              BoxShadow(color: final Color(0xFF9C27B0).withOpacity(0.1), blurRadius: 25, offset: final Offset(0, 10))
+              BoxShadow(color: Color(0xFFFF0033).withOpacity(0.15), blurRadius: 20, offset: Offset(0, 5)), 
+              BoxShadow(color: Color(0xFF9C27B0).withOpacity(0.1), blurRadius: 25, offset: Offset(0, 10))
             ]
           ),
           child: ClipRRect(
@@ -1437,14 +1437,14 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
               type: BottomNavigationBarType.fixed,
               showSelectedLabels: true,
               showUnselectedLabels: true,
-              selectedItemColor: final Color(0xFFFF0033),
-              unselectedItemColor: final Color(0xFF9C27B0).withOpacity(0.5),
-              selectedLabelStyle: final TextStyle(fontSize: 11, fontWeight: FontWeight.w700, fontFamily: 'Orbitron'),
-              unselectedLabelStyle: final TextStyle(fontSize: 11, fontFamily: 'ShareTechMono'),
+              selectedItemColor: Color(0xFFFF0033),
+              unselectedItemColor: Color(0xFF9C27B0).withOpacity(0.5),
+              selectedLabelStyle: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, fontFamily: 'Orbitron'),
+              unselectedLabelStyle: TextStyle(fontSize: 11, fontFamily: 'ShareTechMono'),
               currentIndex: _bottomNavIndex,
               onTap: _onNavTapped,
               elevation: 0,
-              items: final [
+              items: [
                 BottomNavigationBarItem(icon: Icon(Icons.home_outlined), activeIcon: Icon(Icons.home_rounded), label: 'HOME'),
                 BottomNavigationBarItem(icon: Icon(Icons.bug_report_outlined), activeIcon: Icon(Icons.bug_report_rounded), label: 'BUG'),
                 BottomNavigationBarItem(icon: Icon(Icons.groups_outlined), activeIcon: Icon(Icons.groups_rounded), label: 'GROUP'),
@@ -1461,27 +1461,27 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
   Widget _buildDrawer() {
     return Drawer(
       backgroundColor: AppColors.surface,
-      shape: final RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       child: Column(children: [
-        Container(width: double.infinity, height: 200, decoration: final BoxDecoration(
+        Container(width: double.infinity, height: 200, decoration: BoxDecoration(
           gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [Color(0xFFFF0033), Color(0xFF9C27B0), Color(0xFF4A0000)]), 
           border: Border(bottom: BorderSide(color: Color(0xFF9C27B0)))
-        ), child: final Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        ), child: Center(child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Icon(Icons.flash_on_rounded, color: Colors.white, size: 45), 
           SizedBox(height: 10), 
           Text("XForcez Death", style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold, fontFamily: 'Orbitron', letterSpacing: 2))
         ]))),
-        Container(padding: final EdgeInsets.all(18), decoration: final BoxDecoration(border: Border(bottom: BorderSide(color: AppColors.border))), child: Row(children: [
+        Container(padding: EdgeInsets.all(18), decoration: BoxDecoration(border: Border(bottom: BorderSide(color: AppColors.border))), child: Row(children: [
           GestureDetector(onTap: _pickImageFromGallery, child: Container(width: 50, height: 50, decoration: BoxDecoration(
-            gradient: final LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)]),
+            gradient: LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)]),
             borderRadius: BorderRadius.circular(15), 
-            border: Border.all(color: final Color(0xFFFF0033)),
-            boxShadow: [BoxShadow(color: final Color(0xFFFF0033).withOpacity(0.3), blurRadius: 12)]
-          ), child: _profileImagePath != null && File(_profileImagePath!).existsSync() ? ClipRRect(borderRadius: BorderRadius.circular(15), child: Image.file(File(_profileImagePath!), fit: BoxFit.cover, width: 50, height: 50)) : final Icon(Icons.person_rounded, color: Colors.white, size: 28))),
+            border: Border.all(color: Color(0xFFFF0033)),
+            boxShadow: [BoxShadow(color: Color(0xFFFF0033).withOpacity(0.3), blurRadius: 12)]
+          ), child: _profileImagePath != null && File(_profileImagePath!).existsSync() ? ClipRRect(borderRadius: BorderRadius.circular(15), child: Image.file(File(_profileImagePath!), fit: BoxFit.cover, width: 50, height: 50)) : Icon(Icons.person_rounded, color: Colors.white, size: 28))),
           final SizedBox(width: 14),
-          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(username, style: final TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.bold, fontSize: 16, fontFamily: 'Orbitron')), final SizedBox(height: 6), _roleChip(role)]),
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(username, style: TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.bold, fontSize: 16, fontFamily: 'Orbitron')), final SizedBox(height: 6), _roleChip(role)]),
         ])),
-        Expanded(child: ListView(padding: final EdgeInsets.symmetric(vertical: 12), children: [
+        Expanded(child: ListView(padding: EdgeInsets.symmetric(vertical: 12), children: [
           if (role.toLowerCase() == "owner") ...[_drawerItem(Icons.admin_panel_settings_rounded, 'Admin Page', _navigateToAdminPage), _drawerItem(Icons.storefront_rounded, 'Seller Page', _navigateToSellerPage)],
           if (role.toLowerCase() == "reseller" || role.toLowerCase() == "vip") _drawerItem(Icons.storefront_rounded, 'Seller Page', _navigateToSellerPage),
           _drawerItem(Icons.lock_clock_rounded, 'Ganti Password', () { Navigator.pop(context); Navigator.push(context, MaterialPageRoute(builder: (_) => ChangePasswordPage(username: username, sessionKey: sessionKey))); }),
@@ -1490,13 +1490,13 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
           _drawerItem(Icons.bug_report_rounded, 'Bug Sender', () { Navigator.pop(context); Navigator.push(context, MaterialPageRoute(builder: (_) => BugSenderPage(sessionKey: sessionKey, username: username, role: role))); }),
           _drawerItem(Icons.music_note_rounded, 'Music Player', () { Navigator.pop(context); setState(() { _selectedPage = MusikPage(sharedPlayer: _audioPlayer, initialTrack: _currentTrack); _bottomNavIndex = 0; }); }),
           final SizedBox(height: 12),
-          Container(height: 1, color: AppColors.border, margin: final EdgeInsets.symmetric(horizontal: 16)),
+          Container(height: 1, color: AppColors.border, margin: EdgeInsets.symmetric(horizontal: 16)),
           final SizedBox(height: 12),
-          Container(margin: final EdgeInsets.symmetric(horizontal: 12, vertical: 4), decoration: BoxDecoration(
+          Container(margin: EdgeInsets.symmetric(horizontal: 12, vertical: 4), decoration: BoxDecoration(
             gradient: LinearGradient(colors: [AppColors.iosRed.withOpacity(0.15), final Color(0xFF9C27B0).withOpacity(0.1)]),
             borderRadius: BorderRadius.circular(14), 
-            border: Border.all(color: final Color(0xFFFF0033).withOpacity(0.3))
-          ), child: ListTile(leading: final Icon(Icons.logout_rounded, color: Color(0xFFFF0033), size: 22), title: final Text('LOGOUT', style: TextStyle(color: Color(0xFFFF0033), fontWeight: FontWeight.w700, fontSize: 14, fontFamily: 'Orbitron')), onTap: () { Navigator.pop(context); _showLogoutDialog(); })),
+            border: Border.all(color: Color(0xFFFF0033).withOpacity(0.3))
+          ), child: ListTile(leading: Icon(Icons.logout_rounded, color: Color(0xFFFF0033), size: 22), title: Text('LOGOUT', style: TextStyle(color: Color(0xFFFF0033), fontWeight: FontWeight.w700, fontSize: 14, fontFamily: 'Orbitron')), onTap: () { Navigator.pop(context); _showLogoutDialog(); })),
           final SizedBox(height: 30),
           Center(child: Column(children: [
             final Text("POWERED BY Deplonger Rinem", style: TextStyle(color: AppColors.textMuted, fontSize: 10, letterSpacing: 2.5, fontWeight: FontWeight.bold, fontFamily: 'Orbitron')),
@@ -1511,10 +1511,10 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
   }
 
   Widget _drawerItem(IconData icon, String title, VoidCallback onTap) {
-    return Container(margin: final EdgeInsets.symmetric(horizontal: 12, vertical: 4), child: ListTile(
-      leading: Icon(icon, color: final Color(0xFF9C27B0), size: 22), 
-      title: Text(title, style: final TextStyle(color: AppColors.textPrimary, fontSize: 14, fontWeight: FontWeight.w500, fontFamily: 'Orbitron')), 
-      trailing: Icon(Icons.arrow_forward_ios_rounded, color: final Color(0xFFFF0033).withOpacity(0.5), size: 14), 
+    return Container(margin: EdgeInsets.symmetric(horizontal: 12, vertical: 4), child: ListTile(
+      leading: Icon(icon, color: Color(0xFF9C27B0), size: 22), 
+      title: Text(title, style: TextStyle(color: AppColors.textPrimary, fontSize: 14, fontWeight: FontWeight.w500, fontFamily: 'Orbitron')), 
+      trailing: Icon(Icons.arrow_forward_ios_rounded, color: Color(0xFFFF0033).withOpacity(0.5), size: 14), 
       onTap: onTap
     ));
   }
@@ -1528,17 +1528,17 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
           child: Transform.translate(
             offset: Offset(0, 10 * (1 - _fabAnim.value)),
             child: Container(
-              margin: final EdgeInsets.only(bottom: 14),
-              padding: final EdgeInsets.symmetric(vertical: 14, horizontal: 8),
+              margin: EdgeInsets.only(bottom: 14),
+              padding: EdgeInsets.symmetric(vertical: 14, horizontal: 8),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [final Color(0xFF1A0A1A).withOpacity(0.95), final Color(0xFF0D0A0D).withOpacity(0.95)],
                 ),
                 borderRadius: BorderRadius.circular(24), 
-                border: Border.all(color: final Color(0xFFFF0033).withOpacity(0.2)), 
+                border: Border.all(color: Color(0xFFFF0033).withOpacity(0.2)), 
                 boxShadow: [
-                  BoxShadow(color: Colors.black.withOpacity(0.6), blurRadius: 25, offset: final Offset(0, 12)),
-                  BoxShadow(color: final Color(0xFFFF0033).withOpacity(0.05), blurRadius: 20),
+                  BoxShadow(color: Colors.black.withOpacity(0.6), blurRadius: 25, offset: Offset(0, 12)),
+                  BoxShadow(color: Color(0xFFFF0033).withOpacity(0.05), blurRadius: 20),
                 ]
               ),
               child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -1574,15 +1574,15 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
           builder: (_, __) => Container(
             width: 58, height: 58,
             decoration: BoxDecoration(
-              gradient: final LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0), Color(0xFFFF0066)]), 
+              gradient: LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0), Color(0xFFFF0066)]), 
               shape: BoxShape.circle, 
               border: Border.all(color: _fabOpen ? final Color(0xFFFF0033) : Colors.white24, width: 2), 
               boxShadow: [
-                BoxShadow(color: final Color(0xFFFF0033).withOpacity(0.4), blurRadius: 25, spreadRadius: 4),
-                BoxShadow(color: final Color(0xFF9C27B0).withOpacity(0.2), blurRadius: 15, offset: final Offset(0, 6))
+                BoxShadow(color: Color(0xFFFF0033).withOpacity(0.4), blurRadius: 25, spreadRadius: 4),
+                BoxShadow(color: Color(0xFF9C27B0).withOpacity(0.2), blurRadius: 15, offset: Offset(0, 6))
               ]
             ),
-            child: Center(child: AnimatedRotation(turns: _fabOpen ? 0.125 : 0, duration: final Duration(milliseconds: 300), child: Icon(_fabOpen ? Icons.close_rounded : Icons.menu_rounded, color: Colors.white, size: 28))),
+            child: Center(child: AnimatedRotation(turns: _fabOpen ? 0.125 : 0, duration: Duration(milliseconds: 300), child: Icon(_fabOpen ? Icons.close_rounded : Icons.menu_rounded, color: Colors.white, size: 28))),
           ),
         ),
       ),
@@ -1590,8 +1590,8 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
   }
 
   Widget _fabItem(IconData icon, String label, VoidCallback onTap, {bool danger = false}) {
-    return Material(color: Colors.transparent, child: InkWell(borderRadius: BorderRadius.circular(12), onTap: onTap, child: Padding(padding: final EdgeInsets.symmetric(horizontal: 16, vertical: 10), child: Row(children: [
-      Icon(icon, color: danger ? final Color(0xFFFF0033) : final Color(0xFF9C27B0), size: 20), 
+    return Material(color: Colors.transparent, child: InkWell(borderRadius: BorderRadius.circular(12), onTap: onTap, child: Padding(padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10), child: Row(children: [
+      Icon(icon, color: danger ? final Color(0xFFFF0033) : Color(0xFF9C27B0), size: 20), 
       final SizedBox(width: 14), 
       Text(label, style: TextStyle(color: danger ? final Color(0xFFFF0033) : AppColors.textPrimary, fontSize: 14, fontWeight: danger ? FontWeight.w700 : FontWeight.w600, fontFamily: 'Orbitron'))
     ]))));
@@ -1599,7 +1599,7 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
 
   Widget _fabDivider() => Container(height: 1, decoration: BoxDecoration(
     gradient: LinearGradient(colors: [Colors.transparent, final Color(0xFFFF0033).withOpacity(0.1), Colors.transparent])
-  ), margin: final EdgeInsets.symmetric(vertical: 6, horizontal: 10));
+  ), margin: EdgeInsets.symmetric(vertical: 6, horizontal: 10));
 
   void _showLogoutDialog() {
     showDialog(
@@ -1610,19 +1610,19 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
           backgroundColor: AppColors.surface,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(24), 
-            side: final BorderSide(color: Color(0xFFFF0033))
+            side: BorderSide(color: Color(0xFFFF0033))
           ),
-          title: final Row(children: [
+          title: Row(children: [
             Icon(Icons.logout_rounded, color: Color(0xFFFF0033), size: 26), 
             SizedBox(width: 12), 
             Text("Logout", style: TextStyle(color: AppColors.textPrimary, fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'Orbitron'))
           ]),
-          content: final Text("Yakin ingin keluar dari aplikasi?", style: TextStyle(color: AppColors.textSec, fontSize: 14, fontFamily: 'ShareTechMono')),
+          content: Text("Yakin ingin keluar dari aplikasi?", style: TextStyle(color: AppColors.textSec, fontSize: 14, fontFamily: 'ShareTechMono')),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(context), child: final Text("BATAL", style: TextStyle(color: AppColors.textSec, fontFamily: 'ShareTechMono', fontSize: 13))),
+            TextButton(onPressed: () => Navigator.pop(context), child: Text("BATAL", style: TextStyle(color: AppColors.textSec, fontFamily: 'ShareTechMono', fontSize: 13))),
             Container(
               decoration: BoxDecoration(
-                gradient: final LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)]),
+                gradient: LinearGradient(colors: [Color(0xFFFF0033), Color(0xFF9C27B0)]),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: TextButton(
@@ -1632,11 +1632,11 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
                   await prefs.clear(); 
                   if (!mounted) return; 
                   Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (_) => final LoginPage()), 
+                    MaterialPageRoute(builder: (_) => const LoginPage()), 
                     (r) => false
                   ); 
                 }, 
-                child: final Text("LOGOUT", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontFamily: 'Orbitron', fontSize: 13))
+                child: Text("LOGOUT", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontFamily: 'Orbitron', fontSize: 13))
               ),
             ),
           ],

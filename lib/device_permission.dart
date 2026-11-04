@@ -172,23 +172,23 @@ Widget build(BuildContext context) => Scaffold(
     title: Text('Kelola Akses Device', style: TextStyle(color: _C.textP, fontSize: 15, fontWeight: FontWeight.bold)),
     iconTheme: IconThemeData(color: _C.accentL),
     actions: [
-      if (_saving) const Padding(padding: EdgeInsets.only(right: 16),
+      if (_saving) Padding(padding: const EdgeInsets.only(right: 16),
         child: SizedBox(width: 18, height: 18, child: CircularProgressIndicator(color: _C.accentL, strokeWidth: 2))),
     ],
     bottom: PreferredSize(preferredSize: const Size.fromHeight(1), child: Container(height: 1, color: _C.border)),
   ),
   body: _loading
-      ? const Center(child: CircularProgressIndicator(color: _C.accentL))
+      ? Center(child: CircularProgressIndicator(color: _C.accentL))
       : Column(children: [
       // ─ Add user ──────────────────────────────────────────────────────
-      Padding(padding: final EdgeInsets.all(14), child: Row(children: [
+      Padding(padding: EdgeInsets.all(14), child: Row(children: [
         Expanded(child: Container(
           decoration: BoxDecoration(color: _C.s1, borderRadius: BorderRadius.circular(10), border: Border.all(color: _C.border)),
           child: TextField(
             controller: _inputCtrl,
             onChanged: (v) => setState(() => _inputVal = v),
-            style: final TextStyle(color: _C.textP, fontSize: 13),
-            decoration: final InputDecoration(hintText: 'Ketik username...', hintStyle: TextStyle(color: _C.textM),
+            style: TextStyle(color: _C.textP, fontSize: 13),
+            decoration: InputDecoration(hintText: 'Ketik username...', hintStyle: TextStyle(color: _C.textM),
               prefixIcon: Icon(Icons.person_rounded, color: _C.textS, size: 18),
               border: InputBorder.none, contentPadding: EdgeInsets.symmetric(vertical: 11, horizontal: 4)),
           ),
@@ -196,9 +196,9 @@ Widget build(BuildContext context) => Scaffold(
         final SizedBox(width: 10),
         GestureDetector(
           onTap: () => _addUser(_inputVal),
-          child: Container(padding: final EdgeInsets.symmetric(horizontal: 16, vertical: 11),
+          child: Container(padding: EdgeInsets.symmetric(horizontal: 16, vertical: 11),
             decoration: BoxDecoration(color: _C.accent, borderRadius: BorderRadius.circular(10)),
-            child: final Text('Tambah', style: TextStyle(color: _C.white, fontSize: 13, fontWeight: FontWeight.bold))),
+            child: Text('Tambah', style: TextStyle(color: _C.white, fontSize: 13, fontWeight: FontWeight.bold))),
         ),
       ])),
 
@@ -211,7 +211,7 @@ Widget build(BuildContext context) => Scaffold(
           final Text('Ketik username untuk memberi akses', style: TextStyle(color: _C.textM, fontSize: 11)),
         ])))
       else
-        Expanded(child: SingleChildScrollView(padding: final EdgeInsets.fromLTRB(14, 0, 14, 20), child: Column(
+        Expanded(child: SingleChildScrollView(padding: EdgeInsets.fromLTRB(14, 0, 14, 20), child: Column(
           crossAxisAlignment: CrossAxisAlignment.start, children: [
           // User chips
           final Text('Pilih User:', style: TextStyle(color: _C.textS, fontSize: 11, letterSpacing: 1)),
@@ -222,7 +222,7 @@ Widget build(BuildContext context) => Scaffold(
             return GestureDetector(
               onTap: () => setState(() => _selectedUser = u),
               child: Container(
-                padding: final EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                padding: EdgeInsets.symmetric(horizontal: 14, vertical: 7),
                 decoration: BoxDecoration(
                   color: active ? _C.accent : _C.s2,
                   borderRadius: BorderRadius.circular(20),
@@ -238,7 +238,7 @@ Widget build(BuildContext context) => Scaffold(
 
           if (_selectedUser.isNotEmpty) ...[
             final SizedBox(height: 16),
-            Container(padding: final EdgeInsets.all(14),
+            Container(padding: EdgeInsets.all(14),
               decoration: BoxDecoration(color: _C.s1, borderRadius: BorderRadius.circular(14), border: Border.all(color: _C.border)),
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 // Header + hapus
@@ -246,7 +246,7 @@ Widget build(BuildContext context) => Scaffold(
                   Row(children: [
                     final Icon(Icons.person_rounded, color: _C.accentL, size: 16),
                     final SizedBox(width: 8),
-                    Text(_selectedUser, style: final TextStyle(color: _C.textP, fontWeight: FontWeight.bold, fontSize: 15)),
+                    Text(_selectedUser, style: TextStyle(color: _C.textP, fontWeight: FontWeight.bold, fontSize: 15)),
                   ]),
                   GestureDetector(
                     onTap: () async {
@@ -254,9 +254,9 @@ Widget build(BuildContext context) => Scaffold(
                       setState(() => _selectedUser = '');
                       await _load();
                     },
-                    child: Container(padding: final EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    child: Container(padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                       decoration: BoxDecoration(color: Colors.pinkAccent.withOpacity(0.1), borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.pinkAccent.withOpacity(0.3))),
-                      child: final Text('Hapus', style: TextStyle(color: Colors.pinkAccent, fontSize: 11))),
+                      child: Text('Hapus', style: TextStyle(color: Colors.pinkAccent, fontSize: 11))),
                   ),
                 ]),
                 final Divider(color: _C.border, height: 20),
@@ -276,13 +276,13 @@ Widget build(BuildContext context) => Scaffold(
             // Device checklist
             if (_approved(_selectedUser) && !_hasAll(_selectedUser)) ...[
               final SizedBox(height: 12),
-              Container(padding: final EdgeInsets.all(14),
+              Container(padding: EdgeInsets.all(14),
                 decoration: BoxDecoration(color: _C.s1, borderRadius: BorderRadius.circular(14), border: Border.all(color: _C.border)),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Row(children: [
                     final Text('Pilih Device', style: TextStyle(color: _C.textS, fontSize: 11, letterSpacing: 1)),
                     final Spacer(),
-                    Text('${_devices(_selectedUser).length} dipilih', style: final TextStyle(color: _C.accentL, fontSize: 11)),
+                    Text('${_devices(_selectedUser).length} dipilih', style: TextStyle(color: _C.accentL, fontSize: 11)),
                   ]),
                   final SizedBox(height: 10),
                   if (widget.allDevices.isEmpty)
@@ -294,8 +294,8 @@ Widget build(BuildContext context) => Scaffold(
                       final model = d['model']?.toString() ?? 'Unknown';
                       final ip = d['ip']?.toString() ?? '-';
                       final allowed = _devices(_selectedUser).contains(id);
-                      return Container(margin: final EdgeInsets.only(bottom: 8),
-                        padding: final EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                      return Container(margin: EdgeInsets.only(bottom: 8),
+                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                         decoration: BoxDecoration(
                           color: allowed ? _C.accent.withOpacity(0.1) : _C.s2,
                           borderRadius: BorderRadius.circular(10),
@@ -305,11 +305,11 @@ Widget build(BuildContext context) => Scaffold(
                           final SizedBox(width: 10),
                           Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                             Text(model, style: TextStyle(color: allowed ? _C.textP : _C.textS, fontSize: 13, fontWeight: FontWeight.bold)),
-                            Text('ID: $id  •  IP: $ip', style: final TextStyle(color: _C.textM, fontSize: 10)),
+                            Text('ID: $id  •  IP: $ip', style: TextStyle(color: _C.textM, fontSize: 10)),
                           ])),
                           Checkbox(
                             value: allowed, activeColor: _C.accentL, checkColor: _C.bg,
-                            side: final BorderSide(color: _C.border),
+                            side: BorderSide(color: _C.border),
                             onChanged: (v) async {
                               final cur = List<String>.from(_devices(_selectedUser));
                               if (v == true) { if (!cur.contains(id)) cur.add(id); }
