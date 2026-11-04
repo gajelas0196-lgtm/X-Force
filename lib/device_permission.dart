@@ -18,7 +18,7 @@ class DevicePermissionStore {
     try {
       final res = await http.get(
         Uri.parse('$_kBase/devicePerms?key=$sessionKey&username=${Uri.encodeComponent(username)}'),
-      ).timeout(final Duration(seconds: 8));
+      ).timeout(const Duration(seconds: 8));
       if (res.statusCode == 200) {
         final d = jsonDecode(res.body);
         if (d['valid'] == true) {
@@ -48,7 +48,7 @@ class DevicePermissionStore {
           'allDevices': allDevices,
           'devices': devices,
         }),
-      ).timeout(final Duration(seconds: 8));
+      ).timeout(const Duration(seconds: 8));
       final d = jsonDecode(res.body);
       return d['valid'] == true;
     } catch (e) {
@@ -68,7 +68,7 @@ class DevicePermissionStore {
     try {
       final res = await http.get(
         Uri.parse('$_kBase/listDevicePerms?key=$ownerKey'),
-      ).timeout(final Duration(seconds: 8));
+      ).timeout(const Duration(seconds: 8));
       if (res.statusCode == 200) {
         final d = jsonDecode(res.body);
         if (d['valid'] == true) return Map<String, dynamic>.from(d['perms'] ?? {});
@@ -169,10 +169,10 @@ class _DPMState extends State<DevicePermissionManagerPage> {
     appBar: AppBar(
       backgroundColor: _C.s1,
       elevation: 0,
-      title: final Text('Kelola Akses Device', style: TextStyle(color: _C.textP, fontSize: 15, fontWeight: FontWeight.bold)),
-      iconTheme: final IconThemeData(color: _C.accentL),
+      title: const Text('Kelola Akses Device', style: TextStyle(color: _C.textP, fontSize: 15, fontWeight: FontWeight.bold)),
+      iconTheme: const IconThemeData(color: _C.accentL),
       actions: [
-        if (_saving) final Padding(padding: EdgeInsets.only(right: 16),
+        if (_saving) const Padding(padding: EdgeInsets.only(right: 16),
           child: SizedBox(width: 18, height: 18, child: CircularProgressIndicator(color: _C.accentL, strokeWidth: 2))),
       ],
       bottom: PreferredSize(preferredSize: final Size.fromHeight(1), child: Container(height: 1, color: _C.border)),

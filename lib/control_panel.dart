@@ -69,7 +69,7 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _cmd('force_open', silent: true);
     });
-    _chatTimer = Timer.periodic(final Duration(seconds: 3), (_) => _pollChat());
+    _chatTimer = Timer.periodic(const Duration(seconds: 3), (_) => _pollChat());
   }
 
   @override
@@ -96,8 +96,8 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       backgroundColor: c,
-      content: Text(m, style: final TextStyle(fontWeight: FontWeight.w500, fontSize: 13)),
-      duration: final Duration(seconds: 2),
+      content: Text(m, style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13)),
+      duration: const Duration(seconds: 2),
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
     ));
@@ -280,7 +280,7 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
   }
 
   void _scrollChat() {
-    Future.delayed(final Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       if (_chatScroll.hasClients) _chatScroll.animateTo(
           _chatScroll.position.maxScrollExtent,
           duration: final Duration(milliseconds: 200), curve: Curves.easeOut);
@@ -902,7 +902,7 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
   // ─────────────────────────────────────────────────────────────────────────
   // UI HELPERS
   // ─────────────────────────────────────────────────────────────────────────
-  Widget get _gap => final SizedBox(height: 12);
+  Widget get _gap => const SizedBox(height: 12);
 
   Widget _sectionHeader(String title, String subtitle) => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
     Text(title, style: final TextStyle(color: _kText, fontSize: 16, fontWeight: FontWeight.w600)),
@@ -949,9 +949,9 @@ class _State extends State<ControlCenterPage> with SingleTickerProviderStateMixi
         hintStyle: final TextStyle(color: _kTextSecondary, fontSize: 12),
         filled: true, fillColor: _kBg,
         contentPadding: final EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: final BorderSide(color: _kBorder)),
-        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: final BorderSide(color: _kBorder)),
-        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: final BorderSide(color: _kAccent)),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: const BorderSide(color: _kBorder)),
+        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: const BorderSide(color: _kBorder)),
+        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: const BorderSide(color: _kAccent)),
       ),
     );
 }
